@@ -1,0 +1,127 @@
+Representation of 3-dimensionael moving scene
+
+czyli w wolnym tłumaczeniu:
+
+Reprezentacja trójwymiarowej sceny ruchomej
+
+Badanie geometrycznych zależności między trójwymiarową sceną a dwuwymiarowymi obrazami generowanymi poprzez ruch kamery po scenie, leży w sercu dwóch fundamentalnych typów transformacji:
+
+1) ruch Euklidesowy == ruch brył sztywnych
+2) rzut perspektywiczny
+
+Pierwszy z nich zostanie omówiony na dzisiejsyzm seminarium, drugi zaś zostanie omówiony za tydzień przez Maćka. Obydwa tematy będą wymagały znajomości podstawowych obiektów i notacji z dziedziny algebry. Tak na prawdę, całe dzisiejsze seminarium, to będzie czysta algebra, ale mam nadzieję, że was tym nie zanudzę.
+
+Agenda:
+1) Świat, którym się zajmujemy (przestrzeń E^3)
+2) Obiekty, które żyją w tym świecie (ruch bryły sztywnej)
+3) Ruch obrotowy i jego reprezentacje
+4) Reprezenatcje ruchu bryły sztywnej 
+5) 
+
+1) Niech E^3 będzie trójwymiarową przestrzenią euklidesową. Jest to naturalny sposób modelowania świata rzeczywistego. W ogólnym przypadku przestrzeń euklidesowa zdefiniowana jest poprzez 5 aksjomatów Euklidesa:
+- dowolne dwa punkty można połączyć odcinkiem
+- dowolny odcinek można przedłużyć nieograniczenie, uzyskując prostą
+- dla danego odcinka można zaznaczyć okrąg o środku w jednym z jego końców i promieniu równym jego długości
+- wszytskie kąty proste są przystające
+- dwie proste, które przecinają przecią w taki sposób, że suma kątów wewnętrzych po jednej stronie jest mniejsza od dwóch kątów prostych, przetną się z tej właśnie strony
+
+Dla naszych potrzeb, trójwymairową przestrzeń euklidesową będzie reprezentować za pomocą układu współrzędnych kartezjańskich: każdy punkt p \in E^3 może być zidentyfikowany poprzez punkt w R^3:
+
+X = [X1, X2, X3]^T = . . \in R^3
+
+Zamiast X1... X,Y,Z. Dzięki temu mamy zależność 1-1 między E^3 a R^3, więc bezpiecznie możemy mówić o punktach i ich współrzędnych, jakby były tym samym bytem. Przeszliśmy pierwszy krok w stronę mierzenia odległości i kątów. Czego nam brakuje, to związać E^3 z metryką. Precyzyjna definicja metryki opiera się na definicji wektora:
+
+Def. Wektor: W przestrzeni euklidesowej, wektor v jest reprezentowany przez parę punktów p,q \in E^3 i zdefiniowany jako stzrałka skierowana łącząca p do q. Piszemy v = pq (strzałka nad).
+
+v zapisujemy także jako [v1,v2,v3]^T \in R^3, gdzie v = Y - X.
+
+wektor zaczeniony, wektor swobodny
+
+zbiór wszystkich wektorów swobodnych tworzy liniową przestrzeń wektorową, z liniową kombinacją dwóch wektorów v, u \in R^3 zdefiniowaną jako:
+
+(wzór 1)
+
+Metryka Euklidesowa dla E^3 jes twtdy zdefiniowana poprzez produkt skalarny na przestrzeni wektorowej R^3.
+
+(wzór 2)
+
+Niektóre własności:
+
+(wzór 3)
+(wzór 4)
+
+Podsumowując: przestrzeń euklidesowa E^3 może być zdefiniowana jako przestrzeń, która identyfikuje się ze zbiorem R^3 i posiada metrykę w swojej przestrzeni wektorowej daną poprzez powyższy iloczyn skalarny.
+
+Jeszcze o wektorach: 
+
+Def: Iloczyn wektorowy: (wzor 5)
+
+(wzór 6)
+
+Z tego wynika, że iloczyn wektorowy jest prostopadły do u oraz do v oraz kolejność czynników definiuje zwrot wektora wynikoego. 
+
+Jeśli ustalimy z góry u, to iloczyn wektorowy może być reprezentowany przez funkcję z R^3 do R^3, która bierze v o zwraca u x v. Taka funkcja jest zdefiniowana jako:
+
+(wzór 7)
+
+Jest oczywiste, że następujący lemat zachodzi:
+(wzór 8)
+
+Dzięki czemu przestrzeń wektorowa R^3 i przestrzeń wszystkich macierzy antysymetrycznych 3x3 (so(3)) są izomorficzne.
+
+2) Ruch bryły sztywnej
+
+Wyobraźmy sobie obiekt ruszający się przed kamerą. Aby precyzyjnie zdefiniować jego ruch powinniśmy ustalić trajetorię każdego punktu leżącego na obiekcie. Np. specyfikując współrzędne punktu poprzez funkcję od czasu X(t). Na nasze szczęcie, nie musimy specyfikować ruchu każdego punktu. Jak za chwilę się przekonamy, do zdefiniowania ruchu obiektu wystarczy ustalić ruch jednego punktu oraz ruch trzech osi współrzędnych zaczepionych w tym punkcie. Powodem tego jest to, że dla każdej bryły sztywnej, odległość między dwoma dowolnymi punktami leżącymi na tej bryle nie zmienia się w czasie podczas ruchu tej bryły. Więc jeśli X(t) i Y(t) są współrzędnymi dowolnych dwóch punktów p i q, odległość między tymi punktami jest stała:
+
+||X(t) - Y(t)|| == constant, for all t \in R
+
+Ruch bryły sztywnej (lub transformacja bryły sztywnej) jest rodziną funkcji, które określają w jaki sposób współrzędne każdego punktu na bryle sztywnej się zmieniają w czasie (respektując powyższą zasadę). Zdefiniujmy taką funkcję jako:
+
+g(t): R^3 -> R^3; X -> g(t)(X).
+
+Zamiast patrzeć na całą ciągłą ścieżkę ruszającego się obiektu, skoncentrujemy się na funkcji między jego początkową a końcową konfiguracją (rigid-body displacement) zdefiniowaną jako:
+
+g: R^3 -> R^3; X -> g(X).
+
+Oprócz transformacji na współrzędnych punktu, g można również zdefiniować jako wykorzystać do transformacji na wektorach. Niech v będzie wektorem zdefiniowanym przez punkty p i q o współrzędnych v = Y - X. Wtedy, po transformacji g, otrzymujemy nowy wektor:
+
+u = g*(v) = g(Y) - g(X)
+
+Jako żę g zachowuje odległaści pomiędzy punktami, w oczywisty sposób otrzymujemy ||g*(v)||=||v|| dla każdego swobodnego wektora v \in R^3.
+
+Zauważmy, że własność zachowania odległości między punktami nie jest wystarczająca aby poprawnie zdefiniować ruch bryły sztywnej. Np. taka transformacja:
+
+f : [x,y,z]^T -> [x,y,-z]^T
+
+Zachowuje odległość, ale nie zwrot! Aby w naszej rodzinie wykluczyć tego typu funkcje, wymagamy, aby zachowywać nie tylko odległość, ale też zwrot. Formalnie, oprócz zachowania modułu wektora, musimy także zachować produkt wektorowy.
+
+Def Ruch bryły sztywnej (rigid-body motion). Funkcja g: R^3 -> R^3 jest ruchem bryły sztywnej wtw zachodzą:
+
+1. ||g*(v)|| = ||v||, for all v \in R^3
+2. g*(u) x g*(v) = g*(u x v), for all u,v \in R^3
+
+Zbiór wszystkich takich ruchów nazywamy SE(3).
+
+Nie jest do końca oczywiste, że powyższa definicja zachowuje kąty między wektorami. Ale można to udowodnić w taki sposób: iloczyn skalarny <.,.> definiujemy poprzez moduł ||.|| (polarization identity):
+
+<u,v> = 1/4(||u+v||^2 - ||u-v||^2)
+
+Więc skoro ||u+v|| = ||g*(u)+g*(v)||, to otzymujemy, że:
+
+<u,v> = <g*(u),g*(v)>, for all u,v \in R^3
+
+Innymi słowy, do definicji ruchu bryły sztywnej można dodać zachowanie iloczynu skalarnego.
+
+W jaki sposób te własności pomagają nam precyzyjnie opisać ruch bryły sztywnej? Fakt, że odległości i zwroty są zachowane przez ruch bryły sztywnej oznacza, że punkty nie mogą ruszać się relatywnie do siebie. Konsekwencją tego faktu jest to, że ruch bryły sztywnej może być opisany przez ruch jednego wybranego punktu na bryle i rotacji układu współrzędnych wziązanego z tym punktem. Będziemy reprezentowali konfigurację brył← sztywnej związując koratezjański układ współrzędnych (frame) do jakiegoś punktu na obiekcie i będziemy śledzili ruch tego układu relytywnie do ustalonego układy współrzędnych świata. world (reference) frame.
+
+Weźmy układ współrzędnych wyznaczony przez trzy ortonormalne wektory e1,e2,e3 \in R^3, które spełniają:
+
+(wzor 9)
+
+Wektory te są ułorzone tak, aby tworzyły prawoskrętny układ: e1 x e2 = e3. Ruch bryły sztywnej g daje nam:
+
+g*(ei)^Tg*(ej) = dij, g*(e1) x g*(e2) = g*(e3).
+
+To znacza, że wektory wynikowe g*(e1),g*(e2),g*(e3) wciąż tworzą prawoskrętny ortonormalny układ. Więc bryła sztywna zawsze może być rozpoznawana przez prawoskrętny, ortonormalny układ, który będziemy nazywali 'object coordinate frame' lub 'body coordinate frame' oraz jej ruch może być w całości opisany przez ruch takiego układu.
+
+Ponadto możemy ustalić, że 'world frame' jest związany z obiektem kamery.
