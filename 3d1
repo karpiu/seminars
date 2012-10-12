@@ -1,4 +1,4 @@
-Representation of 3-dimensionael moving scene
+Representation of 3-dimensional moving scene
 
 czyli w wolnym tłumaczeniu:
 
@@ -9,7 +9,7 @@ Badanie geometrycznych zależności między trójwymiarową sceną a dwuwymiarow
 1) ruch Euklidesowy == ruch brył sztywnych
 2) rzut perspektywiczny
 
-Pierwszy z nich zostanie omówiony na dzisiejsyzm seminarium, drugi zaś zostanie omówiony za tydzień przez Maćka. Obydwa tematy będą wymagały znajomości podstawowych obiektów i notacji z dziedziny algebry. Tak na prawdę, całe dzisiejsze seminarium, to będzie czysta algebra, ale mam nadzieję, że was tym nie zanudzę.
+Pierwszy z nich zostanie omówiony na dzisiejszym seminarium, drugi zaś zostanie omówiony za tydzień przez Maćka. Obydwa tematy będą wymagały znajomości podstawowych obiektów i notacji z dziedziny algebry. Tak na prawdę, całe dzisiejsze seminarium, to będzie czysta algebra, ale mam nadzieję, że was tym nie zanudzę.
 
 Agenda:
 1) Świat, którym się zajmujemy (przestrzeń E^3)
@@ -124,4 +124,39 @@ g*(ei)^Tg*(ej) = dij, g*(e1) x g*(e2) = g*(e3).
 
 To znacza, że wektory wynikowe g*(e1),g*(e2),g*(e3) wciąż tworzą prawoskrętny ortonormalny układ. Więc bryła sztywna zawsze może być rozpoznawana przez prawoskrętny, ortonormalny układ, który będziemy nazywali 'object coordinate frame' lub 'body coordinate frame' oraz jej ruch może być w całości opisany przez ruch takiego układu.
 
-Ponadto możemy ustalić, że 'world frame' jest związany z obiektem kamery.
+W szczególności powinnieśmy ustalić relację między kamerą a resztą świata. Możemy np. ustalić, że 'world frame' jest związany z obiektem kamery i reszta obiektów porusza się względem niej.
+
+3) Ruch obrotowy i jego reprezentacje
+
+- Reprezentacja obrotu poprzez macierze ortogonalne
+
+Załóżmy, że mamy bryłę sztywną obracającą się wokół ustalonego punktu o \in E^3. Załóżmy, że w tym punkcie znajduje się też początek układu W będący 'world frame'em'. Zaczepimy do 'o' jeszcze jeden układ C, będący obracającą się kamerą. Relacja między tymi dwoma ukłądami współrzędnych ilustruje poniższy rysunek:
+
+(rysynek 1)
+
+Konfiguracja układu C względem ukłądu W jest wyznaczona przez współrzędne trzech ortonormalnych wektorów 
+
+r1=g*(e1), r2=g*(e2), r3=g*(e3) \in R^3
+
+r1,r2,r3 są po prostu wektorami jednostkowymi położonymi na współrzędnych x,y,z układu C. Konfiguracja obracającego się układu hest wtedy w całości wyznaczona przez macierz 3x3:
+
+Rwc = [r1,r2,r3] \in R^3x3 
+
+gdzie r1,r2,r3 są ułorzone kolumnami. Z tego że r1,r2,r3 tworzą układ ortonormalny mamy:
+
+(wzor 10)
+
+Co może by zapisane w postaci macierzy:
+
+R_wc^TR_wc = R_wcR_wc^T = I
+
+Każda macierz spełniająca powyższą zależność nazwya się macierzę ortogonalną. Z definicji wynika również, że:
+
+R_wc^-1 = R_wc^T. 
+
+Z tego że r1,r2,r3 tworzą ukłąd prawoskrętny, wymagamy aby wyznacznik macierzy R_wc był równy +1. Przestrzeń wszystkich takich ortogonalnych macierzy \in R^3x3 definiujemy jako:
+
+SO(3)={R \in R^3x3 | R^TR = I, det(R)=+1}
+
+Takie macierze ortogonalne tradycyjnie nazwywają się macierzami obrotu (z wiadomych powodów). (rotation matrices). Side note: SO(3) z operacją mnożenia macierzy tworzą grupę. SO(3) nazwya się czasem grupą obrotową. 
+
