@@ -112,7 +112,7 @@ Więc skoro ||u+v|| = ||g*(u)+g*(v)||, to otzymujemy, że:
 
 Innymi słowy, do definicji ruchu bryły sztywnej można dodać zachowanie iloczynu skalarnego.
 
-W jaki sposób te własności pomagają nam precyzyjnie opisać ruch bryły sztywnej? Fakt, że odległości i zwroty są zachowane przez ruch bryły sztywnej oznacza, że punkty nie mogą ruszać się relatywnie do siebie. Konsekwencją tego faktu jest to, że ruch bryły sztywnej może być opisany przez ruch jednego wybranego punktu na bryle i rotacji układu współrzędnych wziązanego z tym punktem. Będziemy reprezentowali konfigurację brył← sztywnej związując koratezjański układ współrzędnych (frame) do jakiegoś punktu na obiekcie i będziemy śledzili ruch tego układu relytywnie do ustalonego układy współrzędnych świata. world (reference) frame.
+W jaki sposób te własności pomagają nam precyzyjnie opisać ruch bryły sztywnej? Fakt, że odległości i zwroty są zachowane przez ruch bryły sztywnej oznacza, że punkty nie mogą ruszać się relatywnie do siebie. Konsekwencją tego faktu jest to, że ruch bryły sztywnej może być opisany przez ruch jednego wybranego punktu na bryle i rotacji układu współrzędnych wziązanego z tym punktem. Będziemy reprezentowali konfigurację bryły sztywnej związując koratezjański układ współrzędnych (frame) do jakiegoś punktu na obiekcie i będziemy śledzili ruch tego układu relytywnie do ustalonego układy współrzędnych świata. world (reference) frame.
 
 Weźmy układ współrzędnych wyznaczony przez trzy ortonormalne wektory e1,e2,e3 \in R^3, które spełniają:
 
@@ -138,7 +138,7 @@ Konfiguracja układu C względem ukłądu W jest wyznaczona przez współrzędne
 
 r1=g*(e1), r2=g*(e2), r3=g*(e3) \in R^3
 
-r1,r2,r3 są po prostu wektorami jednostkowymi położonymi na współrzędnych x,y,z układu C. Konfiguracja obracającego się układu hest wtedy w całości wyznaczona przez macierz 3x3:
+r1,r2,r3 są po prostu wektorami jednostkowymi położonymi na współrzędnych x,y,z układu C. Konfiguracja obracającego się układu jest wtedy w całości wyznaczona przez macierz 3x3:
 
 Rwc = [r1,r2,r3] \in R^3x3 
 
@@ -160,3 +160,115 @@ SO(3)={R \in R^3x3 | R^TR = I, det(R)=+1}
 
 Takie macierze ortogonalne tradycyjnie nazwywają się macierzami obrotu (z wiadomych powodów). (rotation matrices). Side note: SO(3) z operacją mnożenia macierzy tworzą grupę. SO(3) nazwya się czasem grupą obrotową. 
 
+Example:
+
+(wzor 11)
+
+Wracajac do rysunku, każda macierz obrotu R_wc \in SO(3) reprezentuje możliwą konfigurację obiektu obruconego wokół punktu o. Ponadto taka macierz reprezentuje transformację z układu współrzędnych C do W. Konfiguracja ciągle obracającego się obiektu można opisać jako funkcja trajetorii R(t): t -> SO(3) w przestrzeni SO(3). Jeśli t=/=0, obrót pomiędzy czasem t2 i t1 opiszemy jako R(t2,t1). W prosty sposób można wywnioskować iż:
+
+R(t2,t0) = R(t2,t1)R(t1,t0) for all t0 < t1 < t2 \in R
+
+- Reprezentacja obrotu poprzez 'Canonical exponential coordinates' / 'Axis-angle representation'
+
+Wg autora jest bardziej intuicyjny. Obrót jest parametryzowany poprzez dwie rzeczy:
+
+- wektor jednostkowy wychodzący z układu
+- kąt obrotu wektora (prawoskrętnie)
+
+Wygląda obiecująco, ale czy na pewno można w ten sposób reprezentować każdy obrót bryły sztywnej? Trzeba to udowodnić. Zacznamy od początku.
+
+Mamy trajetorię R(t): R -> SO(3) która wyznacza ciągły ruch obrotowy. Obrót musi spełniać warunek:
+
+(wzor 12)
+
+Oznacza to, że macierz R.(t)R^T(t) \in R^3x3 jest antysymetryczna. Czyli musi istnieć wektor w^(t) \in R^3 taki że:
+
+R.(t)R^T(t) = w^(t) / x R(t) (z prawej)
+R.(t) = w^(t)R(t)
+
+Teraz wykorzystamy tą wiedzę do stworzenia użytecznej reprezentacji macierzy rotacyjnej. Zacznijmy od założenia, że w^ jest ustalone. W tym równaniu możemy interpretować R(t) jako macierz przejścia ( macierz, której iloczyn z wektorem stanu x, z chwili początkowej t_0, daje stan x, w późniejszej chwili t) dla następującego liniowego równania różniczkowego zwyczajnego:
+
+x.(t) = w^x(t), x(t) \in R^3
+
+wg autora oczywistym jest, że rozwiązaniu tego równania jest podane przez:
+
+x(t) = e^w^t x(0)
+
+gdzie e^w^t jest eksponentą macierzy:
+
+(wzor 13)
+
+zakładając że R(0)=I jest stanem początkowym rotacji otrzymujemy:
+
+R(t) = e^w^t (to jest wazne, narysowac na tablicy)
+
+ABy sporwidzć czy rzeczywiście e^w^t jest macierzą rotacyjną można wprost z definicji eksponenty pokazać że
+
+(wzor 14)
+
+Fizyczna interpretacja wzoru 13 jest taka, o której mówiliśmy na początku, czyli jeśli założymy ||w||=1 wtedy R(t)=e^w^t jest obrotem dookoła osi w \in R^3 o kąt t radianów. Ogólnie możemy t absorbować do w więc mamy R = e^w^ dla w o dowolnej długości.
+
+Eksponenta definiuje funkcję z przestrzeni so(3) do przestrzeni SO(3), zwie się to exponential map. 
+
+Zauważmy że otrzymaliśmy wzór 13 zakładając, że w(t) jest stały. Ale oczywiście nie zawsze tak jest. Wtedy naturalnie postaje pytanie: czy każda macierz rotacyjna R \in SO(3) może być wyrażona w formie eksponenty? Odpowiedź brzmi: tak i fakt ten pokazuje poniższe twierdzenie:
+
+Tw. Logarithm of SO(3). Dla każdego R \in SO(3), istnieje w \ R^3 takie, że R = e^w^. 
+
+Jest to tzw funckja z przestrzeni SO(3) do so(3). w^ = log(R)
+
+(wzor 15)
+
+Dzięki temu tw. możemy w efektywny sposób obliczać wektor obrotu mając daną macierz obrotu, ale w jaki sposób efektywnie obliczyć macierz obrotu R = e^w^ mając dany wektor w? Z definicji eksponenty to tak nie bardzo. Możemy użyć następującego tw:
+
+Tw. wzór Rodrigues'a dla macierzy rotacyjnych. Mając dany w \in R^3, eksponenta macierzy R = e^w^ jest równa:
+
+(wzor 16) caly dowod
+
+oczywiste jest ze jest ||w||=1 i t=2kpi dostaniemy identyczność. dla każdgo k. Więc transformacja z so do SO nie jest bijekcja. bo ma nieskończenie wiele elementów w SO3.
+
+4) Reprezentacje ruchu bryły sztywnej
+
+Czyli ruch z rotacją oraz tranzlacją. Rysunek 3 przedstawia ruszający się obiekt z układem C do niego przypisanym. Aby opisać współrzeðne punktu p na obiekcie odnośnie do układu globalnego W, jest oczywiste że należy dodać do siebie wektor tranzlacji T_wc i wektor X_c ale opisany relatywnie do W. Z tego że X_c są współrzędnymi punktu p relatywnymi do układu C, mamy R_wcX_c, gdzie R_wc \in SO(3) jest rotacją między ukłądami W i C. Wtedy współrzędne X_w można otrzymać tak:
+
+X_w = R_wcX_c + T_wc
+
+Zwykle będziemy oznaczali pełny ruch bryły sztywnej przez g_wc = (R_wc,T_wc) lub po prostu g = (R,T) jeśli układy współrzędnych będą w oczywisty sposób wynikały z kontekstu. Wtedy możemy reprezentować na raz rotację i translację pomiędzy dwoma ukłądami współrzędnych. W zwięzłęj formie piszemy:
+
+X_w = g_wc(X_c)
+
+Zbiór wszsytkich możliwych konfiguracji bryły sztywnej może być opisany przez przestrzeń ruchów brył sztywnych:
+
+SE(3) = {g = (R,T) | R \in SO(3), T \in R^3}
+
+Zauważmy, że g = (R,T) nie jest jeszcze  reprezenatcją macierzową dla SE(3).Żeby tak się stało złączenie dwóch ruchów bryły sztywnej musiało by być iloczynem dwóch macierzy. Aby uzyskać taką reprezentacją musimy wprowadzić pojęcie tzw. współrzędnych jednorodnych.
+
+- Reprezentacja jednorodna
+
+Jak niektórzy mogli już zauważyć, w odróżnieniu od samych rotacji obiektów, transformacja pełnego ruchu bryły sztywnej nie jest liniowa, lecz afiniczna. W ramach rzypomnienia: powiemy że dwa wektory są związane liniową transformacją jeśli u = Av dla pewnej macierzy A, i są związane transformacją afiniczną jeśli u = Av + b dla pewnej macierzy A i wektora b.
+
+Nie boimy się mimo wszystko, bo możemy dokonać konwersji z transformacji afinicznej do liniowej wykorzystując właśnie współrzędne jednorodne. Zamieniamy punkt X = [X1,X2,X3]^T \in R^3 na X- = [X1,X2,X3,1] \in R^4
+
+W efekcie, takie rozszerzenie współrzędnych osadza przestrzeń euklidesową  E^3 w hiperpłaszczyźnie R^4 zamiast R^3. Współrzędne jednorodne wektora v = X(q) - X(p) są zdefiniowane jako różnica między jednorodbymi współrzędnymi dwóch punktów q,p stąd otrzymujemy:
+
+(wzor 17)
+
+Zauważmy, że wektory w powyższej formie tworzą podprzesrzeń, w której wszystkie liniowe struktury oryginalnych wektrów v \in R^3 są zachowane w niezmienionej formie prez nową reprezentację. Teraz, używając nowej notacji możemy transformację afiniczną X_w = R_wcX_c+ T_wc przepisać w postaci liniowej:
+
+(wzor 18)
+
+gdzie macierz g-_wc \in R^4x4 zwie się jednorodną reprezentacją ruchu brył sztywnych g_wc = (R_wc, T_wc) \in SE(3). Generalnie, jeśli g = (R,T) wtedy jego reprezentacją jednorodną jest macierz 
+
+g-=|R T|  \in R^4x4
+   |0 1|
+
+Zauważmy, że dzięki temu możemy reprezentować transformację współrzędnych bryły sztywnej przez liniowe mnożenie macierzy. Reprezentacja jednorodna g daje nam naturalną macierzową reprezentację SE(3):
+
+SE(3) = { g- = .. | R \in SO(3), T \in R^3} \podzbior R^4x4
+
+Używając takie reprezentacji w łatwy sposób można sprawdzić, że SE(3) spełnia wszystkie wymagania do bycia grupą. W szczególności for all g1 g2 g \in SE(3) mamy:
+
+...
+
+- Reprezentacja typu exponential coordinates
+
+5) coordinate and velocity transformations
