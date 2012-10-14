@@ -265,10 +265,171 @@ Zauważmy, że dzięki temu możemy reprezentować transformację współrzędny
 
 SE(3) = { g- = .. | R \in SO(3), T \in R^3} \podzbior R^4x4
 
-Używając takie reprezentacji w łatwy sposób można sprawdzić, że SE(3) spełnia wszystkie wymagania do bycia grupą. W szczególności for all g1 g2 g \in SE(3) mamy:
+Używając takiej reprezentacji w łatwy sposób można sprawdzić, że SE(3) spełnia wszystkie wymagania do bycia grupą. W szczególności for all g1 g2 g \in SE(3) mamy:
 
-...
+(wzor 19)
+
+W reprezentacji jednorodnej transformacja o wektor v = X(q) - X(p) \in R^3 wygląda tak:
+
+(wzor 20)
+
+Czyli akcja jest po prostu opisana przez iloczyn macierzy. Słuchać może sobie sam zweryfikować, że g- faktycznie zachowuje iloczyn skalarny i iloczyn wektorowy, co dowodzi, że g- jest ruchem bryły sztywnej zgodnym z podaną wcześniej definiją. Jak widać, ruch brył sztywnej zachowuje się inaczej na punktach (które można obracać i przemieszczać) niż na wektorach (ktore można jedynie obracać)
 
 - Reprezentacja typu exponential coordinates
 
+W punkcie 3.2 niniejszej prezentacji studiowaliśmy współrzędne eksponentne dla rotacji macierzy R \in SO(3). Podobna reprezentacja współrzędnych również istnieje dla reprezentacji jednorodnej ruchu bryły sztywnej g \in SE(3). Teraz dojdziemy do formy ostatecznej, która będzie wykorzystywana przez wszystkie następnych prezentacje. Pokażemy jak rozszerzyć, to co uzyskaliśmy w częci 3.2 na pełen ruch bryły sztywnej. Postępujemy analogicznie:
+
+Załóżmy, że mamy ciągle poruszającą się bryłę sztywną opisaną przez trajektorię na SE(3): g(t)=(R(t),T(t)). W postaci jednorodnej mamy:
+
+(wzor 21)
+
+Analogicznie jak w przypadku rotacji eksponentnej, zbadajmy taką macierz:
+
+(wzor 22)
+
+Wiemy, żę R.R^T(t) jest macierzą antysymetryczną, czyli istnieje w^(t) \in so(3) taki że w^(t)=R.R^T(t). Zdefiniujmy także wektor v(t) \in R^3 taki że v(t) = T.(t) - w^(t)T(t). Wtedy powyższe równanie zapiszemy tak:
+
+(wzor 23)
+
+Jeśli następnie zdefiniujemy KSI^ \in R^4x4:
+
+(wzor 24)
+
+To otrzymamy:
+
+(wzor 25)
+
+Na KSI^ można wtedy patrzeć jako wektor stycznej do krzywej w g(t) i może być wykorzystany do aproksymowania g(t) lokalnie:
+
+(wzor 26)
+
+macierz 4x4 w formie KSI^ nazywamy twistem (skrętem). zbiór wszystkich skrętów opisujemy:
+
+(wzor 27)
+
+Zbiór se(3) nazywamy przestrzenią styczną (lub algebrą Lie) grupy SE(3). Zdefiniujemy również dwa operatory 'V' i 'n' dokonujące konwersji między skrętem a jego współrzędnymi:
+
+(wzor 28)
+
+We współrzędnych skrętu KSI nazwiemy v = prędkość liniowa, w^ = prędkość kątowa; co będzie wskazywało na powiązanie z częcią tranzlacyjną lub rotacyjną pełnego ruchu bryły sztywnej. Załóżmy teraz, że KSI^ jest stały, w rówaniu:
+
+g.(t) = KSI^g(t)
+
+znów otrzymujemy liniowe równanie różniczkowe zwyczajne, które po scałkowaniu daje nam:
+
+(wzor 29)
+
+Zakłądając, że początkowy stan g(0)=I, dochodzimy do wniosku iż:
+
+g(t) = e^KSI^t
+
+gdzie eksponenta skrętu jest dana jako:
+
+(wzor 30)
+
+wykorzystując wzór Rodriguesa i inne ciekawe własności o któ¶ych autor nie wspomniał, można wyprowadzić taki oto wzór na e^KSI^:
+
+(wzor 31)
+
+patrząc na ten wspaniały wzór od razu jesteśmy w stanie stwierdzić, że faktycznie e^KSI^ jest macierzą transformacji bryły sztywnej w SE(3). Tak się analogicznie jak w sekcji 3.2 możemy zdefiniować funkcję z se(3) do SE(3) jako:
+
+(wzor 32)
+
+Znów trzeba sobie zadać pytanie, z uwagi na założenie żę KSI^ jest stałą, czy każdy ruch bryły sztywnej g \in SE(3) może być reprezentowany w formie eksponenty? Innymi słowy czy istnieje funkcja odwrotna/logarytmiczna. Odpowiedź oczywiście brzmi tak.
+
+Tw (Logarytm SE(3)) (wzor 33) wraz z dowodem.
+
+
 5) coordinate and velocity transformations
+
+W następnych rozdziałach często będziemy chcieli wiedzieć jak współrzędne punktu i jego prędkość zmieniają się gdy kamera się porusza. Taka wiedza jest potrzebna, gdyż zwykle wygodniej jest wybrać układ kamery jako 'reference frame' i opisywać ruch kamery i punktu relatywnie do tego układu. Jako że kamera może się poruszać, musiamy wiedzieć jak zamienić wartości takie jak współrzędne czy prędkość z jednego układu kamery do drugiego. W szczególności chcemy wiedzieć jak poprawnie wyrażać położenie i prędkość punktu względem kamery. Teraz zaprezentuję konwencję, która będzie stosowana do końca seminarium.
+
+- Zasady transformacji współrzędnych
+
+Czas t \in R będzie zwykle wykorzystany jako index ruchu kamery. Nawet w przypadku dyskretnym, gdy będzie podanych tylko klika 'snapshotów', wciąż będziemy wykorzystywać t jako index pozycji kamery i obrazka z jakim jest związany (czyli jaki generuje w danym momencie). Więc będziemy używali g(t)=(R(t),T(t)) \in SE(3) lub
+
+(wzor 33)
+
+aby oznaczyć przemieszczenie między jakimś ustalonym układem W a kamerą C w czasie t \in R. Zauważcie, że pominąłem notację 'wc' w subindexach w notacji g_cw(t), bo to oczywiście wynika z kontekstu. Ponadto zakładamy, że g(0)=I, czyli w czasie t=0 kamera jest przystająca do układu świata W. Więc jeśli współrzędne punktu p \in E^3 ustawione względem układu W są podane jako X_0 = X(0), to współrzędne ustawione względem kamery w czasie t są podane jako
+
+(wzor 34)
+
+lub w postaci jednorodnej:
+
+(wzor 34 b)
+
+jeśli kamera znajduje się w miejscach g(t1), g(t2)...g(tm) w czasach t1,t2...tm, to współrzędne punktu p są podane jako (wzor 34 c)
+
+Jeśli tylko pozycja a nie czas będzie w danej chwili nas interesować będziemy pisali g_i zamiast g(t_i) i podobnie R_i zamiast R(t_i), T_i zamiast T(t_i) i X_i zamiast X(t_i). Więc mamy:
+
+(wzor 35)
+
+Ponadto jeśli kamera nie startuje z t=0, ruch między kamerą w czasie t_2 a t_1 bęziemy oznaczać g(t_2,t_1) \in SE(3). Wtedy otrzymujemy następjącą zależność między współrzędnymi punktu p w różnych czasach:
+
+(wzor 36)
+
+Weźme teraz trzecią pozycję kamery t = t_3 \in R, tak jak na poniższym rysunku:
+
+(rysunek 4)
+
+Ruch między kamerą w t_3 a kamerą w t_2 oznaczamy g(t_3,t_2) a między kamerą w t_3 a t_1 oznaczamy g(t_3,_t1). Mamy wtedy następującą zależność między współrzędnymi:
+
+(wzor 37)
+
+zauważmy że zachowana jest następująca zasada:
+
+(wzor 38)
+
+zasada złożenia opisuje współerzędne X punktu p relatywnie do każdej pozycji kamery. Implikacją tej zasady jest również zasada inwersji:
+
+(wzor 39)
+
+gdyż g(t_2,t_1)g(t_1,t_2)=g(t_2,t_2)=I
+
+W przypadku gdy czas nie ma dla nas dużego znaczenia, możemy zamienić oznaczenie g(t_i,t_j) na g_ij. Powyższe zasady zapisujemy wtedy jako:
+
+(wzor 40)
+
+- Zasady transformacji prędkości
+
+Rozumiejąc już jak działa transformacja współrzędnych, należy teraz przestudiować jaki ma ona wpływ na prędkość. Wiemy, że współrzędne X(t) punktu p \in E^3 względem do ruszającej się kamery są funkcją od czasu t:
+
+(wzor 41)
+
+oraz prędkość w punkcie p chwilowego układu kamery jest:
+
+(wzor 42)
+
+Aby wyrazić X.(t) w formie wartości ruszającego się układu zamienimy X_0 na g_cw^-1X(t) i używając natacji skrętu definiujemy:
+
+(wzor 43)
+
+Co można jeszcze inaczej zapisać jako
+
+(wzor 44)
+
+z tego że V^c_cw(t) jest postaci
+
+(wzor 45)
+
+możemy przepisać prędkość punktu w przestrzeni 3d (zamiast współrzędnych jednorodnych) jako:
+
+(wzor 46) 
+
+Fizyczną interpretacją sybolu Vblabla jest prędkość układu globalnego ruszającego się względnie do układu kamery, potrząc z widoku kamery. Zwykle, by jasno ustalić fizyczne znaczenie prędkości, musimy podać prędkośc którego układu rusza się względem którego, i z którego układu patrzymy. Jeśli zmienimy pozycję, z której obserwujemy prędkość, wyrażenie zmienia się wraz ze zmianą widoku. Np. załóżmy że obserwator jest w innym układzie współrzędnych przemieszczonych względem układu kamery poprzez ruch bryły sztywnej g \in SE(3). Wtedy współrzędne tego samego punktu p względem tego układu są Y(t) = gX(t). Wyznaczamy prędkość w nowych układzie i otrzymujemy:
+
+(wzor 47)
+
+Więc nowa prędkość (skręt) jest
+
+(wzor 48)
+
+To jest ta sama wartość fizyczna ale obserwowana z innego punktu widokowego. Widzimy, że prędkości są połączone funkcją zdefiniowaną przez ruch g:
+
+(wzor 49)
+
+to jest tzw. funkcja sprzężenia w przestrzeni se(3). Używając tej notacji w poprzednim przykładzie mamy V^ = sd_g(V^c_cw). Zauważmy żę sprzężenie przekształca prędkość z jednego układu do drugiego. Wykorzystując fakt że g_cw(t)g_wc(t)=I oczywistym jest, iż:
+
+(wzor 50)
+
+więć Vblabla można interpretować jako negację prędkości kamery ruszającej się względem układu globalnego, patrząc z układu kamery.
