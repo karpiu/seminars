@@ -1,210 +1,353 @@
-Representation of 3-dimensional moving scene
+\documentclass[a4paper,12pt]{article}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage[utf8]{inputenc}
+\usepackage[polish]{babel}
+\usepackage{polski}
+\usepackage{fancyhdr}
+\usepackage{verbatim}
 
-czyli w wolnym tłumaczeniu:
+\linespread{1.0}
 
-Reprezentacja trójwymiarowej sceny ruchomej
+\newtheorem{defi}{Definicja}
+\newtheorem{theo}[defi]{Twierdzenie}
+\newtheorem{lemma}[defi]{Lemat}
+\newtheorem{obs}[defi]{Obserwacja}
 
-Badanie geometrycznych zależności między trójwymiarową sceną a dwuwymiarowymi obrazami generowanymi poprzez ruch kamery po scenie, leży w sercu dwóch fundamentalnych typów transformacji:
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\RR}{\mathbb{R}^3}
+\newcommand{\RRR}{\mathbb{R}^{3 \times 3}}
+\newcommand{\vecs}[2]{\langle #1 , #2 \rangle}
 
-1) ruch Euklidesowy == ruch brył sztywnych
-2) rzut perspektywiczny
+\title{Reprezentacja trójwymiarowej, ruchomej sceny}
 
-Pierwszy z nich zostanie omówiony na dzisiejszym seminarium, drugi zaś zostanie omówiony za tydzień przez Maćka. Obydwa tematy będą wymagały znajomości podstawowych obiektów i notacji z dziedziny algebry. Tak na prawdę, całe dzisiejsze seminarium, to będzie czysta algebra, ale mam nadzieję, że was tym nie zanudzę.
+\author{M.~K.~Karpiński\\
+\\
+Uniwersytet Wrocławski\\
+Instytut Informatyki}
 
-Agenda:
-1) Świat, którym się zajmujemy (przestrzeń E^3)
-2) Obiekty, które żyją w tym świecie (ruch bryły sztywnej)
-3) Ruch obrotowy i jego reprezentacje
-4) Reprezenatcje ruchu bryły sztywnej 
-5) 
+\date{Wrocław, dnia \today\ r.}
 
-1) Niech E^3 będzie trójwymiarową przestrzenią euklidesową. Jest to naturalny sposób modelowania świata rzeczywistego. W ogólnym przypadku przestrzeń euklidesowa zdefiniowana jest poprzez 5 aksjomatów Euklidesa:
-- dowolne dwa punkty można połączyć odcinkiem
-- dowolny odcinek można przedłużyć nieograniczenie, uzyskując prostą
-- dla danego odcinka można zaznaczyć okrąg o środku w jednym z jego końców i promieniu równym jego długości
-- wszytskie kąty proste są przystające
-- dwie proste, które przecinają przecią w taki sposób, że suma kątów wewnętrzych po jednej stronie jest mniejsza od dwóch kątów prostych, przetną się z tej właśnie strony
+\begin{document}
 
-Dla naszych potrzeb, trójwymairową przestrzeń euklidesową będzie reprezentować za pomocą układu współrzędnych kartezjańskich: każdy punkt p \in E^3 może być zidentyfikowany poprzez punkt w R^3:
+\pagestyle{fancy}
+\maketitle
 
-X = [X1, X2, X3]^T = . . \in R^3
+\section{Wstęp}
+\indent \indent Badanie geometrycznych zależności między trójwymiarową sceną a dwuwymiarowymi obrazami generowanymi poprzez ruch kamery po scenie, leży w sercu dwóch fundamentalnych typów przekształceń:
 
-Zamiast X1... X,Y,Z. Dzięki temu mamy zależność 1-1 między E^3 a R^3, więc bezpiecznie możemy mówić o punktach i ich współrzędnych, jakby były tym samym bytem. Przeszliśmy pierwszy krok w stronę mierzenia odległości i kątów. Czego nam brakuje, to związać E^3 z metryką. Precyzyjna definicja metryki opiera się na definicji wektora:
+\begin{enumerate}
+  \item ruchu Euklidesowego (czyli ruchu brył sztywnych)
+  \item rzutu perspektywiczny
+\end{enumerate}
 
-Def. Wektor: W przestrzeni euklidesowej, wektor v jest reprezentowany przez parę punktów p,q \in E^3 i zdefiniowany jako stzrałka skierowana łącząca p do q. Piszemy v = pq (strzałka nad).
+Pierwsze z nich zostanie omówione na dzisiejszym seminarium, drugie zaś zostanie omówione za tydzień przez Maćka. Obydwa tematy będą wymagały znajomości podstawowych obiektów i notacji z dziedziny algebry. Tak na prawdę, całe dzisiejsze seminarium, to będzie czysta algebra, ale mam nadzieję, że was tym nie zanudzę. Agenda:
 
-v zapisujemy także jako [v1,v2,v3]^T \in R^3, gdzie v = Y - X.
+\begin{enumerate}
+\item Świat, którym się zajmujemy (przestrzeń $\E^3$)
+\item Obiekty, które żyją w tym świecie (bryły sztywne)
+\item Ruch obrotowy i jego reprezentacje
+\item Reprezenatcje pełnego ruchu bryły sztywnej 
+\item Przekształcenia współrzędnych i prędkości
+\end{enumerate}
 
-wektor zaczeniony, wektor swobodny
+\section{Przestrzeń euklidesowa}
+\indent \indent Niech $\E^3$ będzie trójwymiarową przestrzenią euklidesową. Jest to naturalny sposób modelowania świata rzeczywistego. W ogólnym przypadku przestrzeń euklidesowa zdefiniowana jest poprzez 5 aksjomatów Euklidesa:
 
-zbiór wszystkich wektorów swobodnych tworzy liniową przestrzeń wektorową, z liniową kombinacją dwóch wektorów v, u \in R^3 zdefiniowaną jako:
+\begin{itemize}
+\item dowolne dwa punkty można połączyć odcinkiem
+\item dowolny odcinek można przedłużyć nieograniczenie, uzyskując prostą
+\item dla danego odcinka można zaznaczyć okrąg o środku w jednym z jego końców i promieniu równym jego długości
+\item wszystkie kąty proste są przystające
+\item dwie proste, które przecinają przecią w taki sposób, że suma kątów wewnętrzych po jednej stronie jest mniejsza od dwóch kątów prostych, przetną się z tej właśnie strony
+\end{itemize}
 
-(wzór 1)
+Dla naszych potrzeb, trójwymairową przestrzeń euklidesową będziemy reprezentować za pomocą układu współrzędnych kartezjańskich: każdy punkt $p \in \E^3$ może być zidentyfikowany poprzez punkt w $\R^3$:
 
-Metryka Euklidesowa dla E^3 jes twtdy zdefiniowana poprzez produkt skalarny na przestrzeni wektorowej R^3.
+\begin{equation}
+X = [x_1, x_2, x_3]^T = 
+\begin{bmatrix}
+x_1 \\ x_2 \\ x_3
+\end{bmatrix}
+\in R^3
+\end{equation}
 
-(wzór 2)
+
+Zamiast $x_1,x_2,x_3$ często będziemy pisać $x,y,z$. Dzięki temu mamy zależność $1-1$ między $\E^3$ a $\R^3$, więc bezpiecznie możemy mówić o punktach i ich współrzędnych, jakby były tym samym bytem. Przeszliśmy pierwszy krok w stronę mierzenia odległości i kątów. Czego nam brakuje, to związać $\E^3$ z metryką. Precyzyjna definicja metryki opiera się na definicji wektora:
+
+\begin{defi}(wektor)
+W przestrzeni euklidesowej, wektor $v$ jest reprezentowany przez parę punktów $p,q \in \E^3$ i zdefiniowany jako stzrałka skierowana łącząca $p$ do $q$. Piszemy $v = \vec{pq}$.
+\end{defi}
+
+\noindent Wektor $v$ zapisujemy także jako $[v_1,v_2,v_3]^T \in \R^3$, gdzie $v = Y - X$.
+
+Wektor jest zaczeniony, jeśli podamy punkt $p$ explicite. W przeciwnym wypadku mówimy o wektorach swobodnych.
+
+Zbiór wszystkich wektorów swobodnych tworzy liniową przestrzeń wektorową z liniową kombinacją dwóch wektorów $v, u \in \R^3$ zdefiniowaną jako:
+
+\begin{equation}
+\alpha v + \beta u = [\alpha v_1 + \beta u_1, \alpha v_2 + \beta u_2, \alpha v_3 + \beta u_3]^T, \quad \forall \alpha,\beta \in \R
+\end{equation}
+
+Metryka Euklidesowa dla $\E^3$ jest wtedy zdefiniowana poprzez produkt skalarny na przestrzeni wektorowej $\R^3$.
+
+\begin{equation}
+\vecs{u}{v} = u^Tv = u_1v_1 + u_2v_2 + u_3v_3, \quad \forall u,v \in \R^3
+\end{equation}
 
 Niektóre własności:
 
-(wzór 3)
-(wzór 4)
+\begin{equation}
+\| v \| = \sqrt{\vecs{v}{v}} = \sqrt{v^2_1 + v^2_2 + v^2_3}
+\end{equation}
 
-Podsumowując: przestrzeń euklidesowa E^3 może być zdefiniowana jako przestrzeń, która identyfikuje się ze zbiorem R^3 i posiada metrykę w swojej przestrzeni wektorowej daną poprzez powyższy iloczyn skalarny.
+\begin{defi}
+Jeśli $\vecs{u}{v}=0$, wtedy $u$ i $v$ są ortogonalne.
+\end{defi}
+
+Podsumowując: przestrzeń euklidesowa $\E^3$ może być zdefiniowana jako przestrzeń, która identyfikuje się ze zbiorem $\RR$ i posiada metrykę w swojej przestrzeni wektorowej daną poprzez powyższy iloczyn skalarny.
 
 Jeszcze o wektorach: 
 
-Def: Iloczyn wektorowy: (wzor 5)
+\begin{defi}[Iloczyn wektorowy]
+Mając dane dwa wektory $u,v \in \R$ ich iloczyn wektorowy (cross product) jest wektorem ze współrzędnymi:
+\begin{equation}
+  u \times v = 
+  \begin{bmatrix}
+    u_2v_3 - u_3v_2 \\ u_3v_1 - u_1v_3 \\ u_1v_2 - u_2v_1
+  \end{bmatrix}
+  \in \RR
+\end{equation}
+\end{defi}
 
-(wzór 6)
+\noindent Można łatwo sprawdzić, że:
 
-Z tego wynika, że iloczyn wektorowy jest prostopadły do u oraz do v oraz kolejność czynników definiuje zwrot wektora wynikoego. 
+\begin{equation}
+\vecs{u \times v}{u} = \vecs{u \times v}{v} = 0, u \times v = -v \times u
+\end{equation}
 
-Jeśli ustalimy z góry u, to iloczyn wektorowy może być reprezentowany przez funkcję z R^3 do R^3, która bierze v o zwraca u x v. Taka funkcja jest zdefiniowana jako:
+Z tego wynika, że iloczyn wektorowy jest prostopadły do $u$ oraz do $v$ oraz kolejność czynników definiuje zwrot wektora wynikowego. 
 
-(wzór 7)
+Jeśli ustalimy z góry $u$, to iloczyn wektorowy może być reprezentowany przez funkcję z $\RR$ do $\RR$, która bierze $v$ i zwraca $u \times v$. Taka funkcja jest zdefiniowana jako:
 
-Jest oczywiste, że następujący lemat zachodzi:
-(wzór 8)
+\begin{equation}
+u \times v = \hat{u}v, \quad \hat{u} = 
+\begin{bmatrix}
+  0    & -u_3 & u_2  \\
+  u_3  & 0    & -u_1 \\
+  -u_2 & u_1  & 0
+\end{bmatrix}
+\in \RRR
+\end{equation}
 
-Dzięki czemu przestrzeń wektorowa R^3 i przestrzeń wszystkich macierzy antysymetrycznych 3x3 (so(3)) są izomorficzne.
+Widać, że $\hat{u}$ jest macierzę antysymetryczną tzn. $\hat{u}^T = -\hat{u}$. Jest oczywiste, że następujący lemat zachodzi:
 
-2) Ruch bryły sztywnej
+\begin{lemma}
+Macierz $M \in \RRR$ jest antysymetryczna wtedy i tylko wtedy, gdy $M=\hat{u}$ dla pewnego $u \in \RR$
+\end{lemma}
 
-Wyobraźmy sobie obiekt ruszający się przed kamerą. Aby precyzyjnie zdefiniować jego ruch powinniśmy ustalić trajetorię każdego punktu leżącego na obiekcie. Np. specyfikując współrzędne punktu poprzez funkcję od czasu X(t). Na nasze szczęcie, nie musimy specyfikować ruchu każdego punktu. Jak za chwilę się przekonamy, do zdefiniowania ruchu obiektu wystarczy ustalić ruch jednego punktu oraz ruch trzech osi współrzędnych zaczepionych w tym punkcie. Powodem tego jest to, że dla każdej bryły sztywnej, odległość między dwoma dowolnymi punktami leżącymi na tej bryle nie zmienia się w czasie podczas ruchu tej bryły. Więc jeśli X(t) i Y(t) są współrzędnymi dowolnych dwóch punktów p i q, odległość między tymi punktami jest stała:
+Dzięki czemu przestrzeń wektorowa $\RR$ i przestrzeń wszystkich macierzy antysymetrycznych $3 \times 3$ (zwana $so(3)$) są izomorficzne.
 
-||X(t) - Y(t)|| == constant, for all t \in R
+\section{Ruch bryły sztywnej}
+
+\indent \indent Wyobraźmy sobie obiekt ruszający się przed kamerą. Aby precyzyjnie zdefiniować jego ruch powinniśmy ustalić trajetorię każdego punktu leżącego na obiekcie. Np. specyfikując współrzędne punktu poprzez funkcję od czasu $X(t)$. Na nasze szczęcie nie musimy specyfikować ruchu każdego punktu. Jak za chwilę się przekonamy, do zdefiniowania ruchu obiektu wystarczy ustalić ruch jednego punktu oraz ruch trzech osi współrzędnych zaczepionych w tym punkcie. Powodem tego jest to, że dla każdej bryły sztywnej, odległość między dwoma dowolnymi punktami leżącymi na tej bryle nie zmienia się w czasie podczas ruchu tej bryły. Więc jeśli $X(t)$ i $Y(t)$ są współrzędnymi dowolnych dwóch punktów $p$ i $q$, odległość między tymi punktami jest stała:
+
+\begin{equation}
+\| X(t) - Y(t) \| == constant, \quad \forall t \in R
+\end{equation}
 
 Ruch bryły sztywnej (lub transformacja bryły sztywnej) jest rodziną funkcji, które określają w jaki sposób współrzędne każdego punktu na bryle sztywnej się zmieniają w czasie (respektując powyższą zasadę). Zdefiniujmy taką funkcję jako:
 
-g(t): R^3 -> R^3; X -> g(t)(X).
+\begin{equation}
+g(t): \RR \rightarrow \RR; X \rightarrow g(t)(X).
+\end{equation}
 
 Zamiast patrzeć na całą ciągłą ścieżkę ruszającego się obiektu, skoncentrujemy się na funkcji między jego początkową a końcową konfiguracją (rigid-body displacement) zdefiniowaną jako:
 
-g: R^3 -> R^3; X -> g(X).
+\begin{equation}
+g: \RR \rightarrow \RR; X \rightarrow g(X).
+\end{equation}
 
-Oprócz transformacji na współrzędnych punktu, g można również zdefiniować jako wykorzystać do transformacji na wektorach. Niech v będzie wektorem zdefiniowanym przez punkty p i q o współrzędnych v = Y - X. Wtedy, po transformacji g, otrzymujemy nowy wektor:
+Oprócz transformacji na współrzędnych punktu, $g$ można również wykorzystać do transformacji na wektorach. Niech $v$ będzie wektorem zdefiniowanym przez punkty $p$ i $q$ o współrzędnych $v = Y - X$. Wtedy, po transformacji $g$, otrzymujemy nowy wektor:
 
-u = g*(v) = g(Y) - g(X)
+\begin{equation}
+u = g_*(v) = g(Y) - g(X)
+\end{equation}
 
-Jako żę g zachowuje odległaści pomiędzy punktami, w oczywisty sposób otrzymujemy ||g*(v)||=||v|| dla każdego swobodnego wektora v \in R^3.
+Jako że $g$ zachowuje odległości pomiędzy punktami, w oczywisty sposób otrzymujemy $\| g_*(v) \| = \| v \|$ dla każdego swobodnego wektora $v \in \RR$.
 
 Zauważmy, że własność zachowania odległości między punktami nie jest wystarczająca aby poprawnie zdefiniować ruch bryły sztywnej. Np. taka transformacja:
 
-f : [x,y,z]^T -> [x,y,-z]^T
+\begin{equation}
+f : [x,y,z]^T \rightarrow [x,y,-z]^T
+\end{equation}
 
 Zachowuje odległość, ale nie zwrot! Aby w naszej rodzinie wykluczyć tego typu funkcje, wymagamy, aby zachowywać nie tylko odległość, ale też zwrot. Formalnie, oprócz zachowania modułu wektora, musimy także zachować produkt wektorowy.
 
-Def Ruch bryły sztywnej (rigid-body motion). Funkcja g: R^3 -> R^3 jest ruchem bryły sztywnej wtw zachodzą:
+\begin{defi}[Ruch bryły sztywnej (rigid-body motion)]
+Funkcja $g: \RR \rightarrow \RR$ jest ruchem bryły sztywnej wtedy, gdy zachodzą:
 
-1. ||g*(v)|| = ||v||, for all v \in R^3
-2. g*(u) x g*(v) = g*(u x v), for all u,v \in R^3
+\begin{enumerate}
+\item $\| g_*(v) \|  = \| v \| , \forall v \in \RR$
+\item $g_*(u) \times g_*(v) = g_*(u \times v), \forall u,v \in \RR$
+\end{enumerate}
 
-Zbiór wszystkich takich ruchów nazywamy SE(3).
+\noindent Zbiór wszystkich takich ruchów nazywamy $SE(3)$.
+\end{defi}
 
-Nie jest do końca oczywiste, że powyższa definicja zachowuje kąty między wektorami. Ale można to udowodnić w taki sposób: iloczyn skalarny <.,.> definiujemy poprzez moduł ||.|| (polarization identity):
+Nie jest do końca oczywiste, że powyższa definicja zachowuje kąty między wektorami. Ale można to udowodnić w taki sposób: iloczyn skalarny $\vecs{.}{.}$ definiujemy poprzez moduł $\| . \|$ (polarization identity):
 
-<u,v> = 1/4(||u+v||^2 - ||u-v||^2)
+\begin{equation}
+\vecs{u}{v} = \frac{1}{4}( \| u+v \|^2 - \| u-v \|^2)
+\end{equation}
 
-Więc skoro ||u+v|| = ||g*(u)+g*(v)||, to otzymujemy, że:
+Więc skoro $\| u+v \| = \| g_*(u)+g_*(v) \|$, to otrzymujemy, że:
 
-<u,v> = <g*(u),g*(v)>, for all u,v \in R^3
+\begin{equation}
+\vecs{u}{v} = \vecs{g_*(u)}{g_*(v)}, \quad \forall u,v \in \RR
+\end{equation}
 
-Innymi słowy, do definicji ruchu bryły sztywnej można dodać zachowanie iloczynu skalarnego.
+\noindent Innymi słowy, do definicji ruchu bryły sztywnej można dodać zachowanie iloczynu skalarnego.
 
-W jaki sposób te własności pomagają nam precyzyjnie opisać ruch bryły sztywnej? Fakt, że odległości i zwroty są zachowane przez ruch bryły sztywnej oznacza, że punkty nie mogą ruszać się relatywnie do siebie. Konsekwencją tego faktu jest to, że ruch bryły sztywnej może być opisany przez ruch jednego wybranego punktu na bryle i rotacji układu współrzędnych wziązanego z tym punktem. Będziemy reprezentowali konfigurację bryły sztywnej związując koratezjański układ współrzędnych (frame) do jakiegoś punktu na obiekcie i będziemy śledzili ruch tego układu relytywnie do ustalonego układy współrzędnych świata. world (reference) frame.
+W jaki sposób te własności pomagają nam precyzyjnie opisać ruch bryły sztywnej? Fakt, że odległości i zwroty są zachowane przez ruch bryły sztywnej oznacza, że punkty nie mogą ruszać się relatywnie do siebie. Konsekwencją tego faktu jest to, że ruch bryły sztywnej może być opisany przez ruch jednego wybranego punktu na bryle i rotacji układu współrzędnych związanego z tym punktem. Będziemy reprezentowali konfigurację bryły sztywnej związując koratezjański układ współrzędnych (frame) do jakiegoś punktu na obiekcie i będziemy śledzili ruch tego układu relytywnie do ustalonego układu współrzędnych świata (uład globalny). World (reference) frame.
 
-Weźmy układ współrzędnych wyznaczony przez trzy ortonormalne wektory e1,e2,e3 \in R^3, które spełniają:
+Weźmy układ współrzędnych wyznaczony przez trzy ortonormalne wektory $e_1,e_2,e_3 \in \RR$, które spełniają:
 
-(wzor 9)
+\begin{equation}
+e^T_ie_j = \delta_{ij} = \left\{
+  \begin{array}{l l}
+    1 & \quad \text{jeśli $i=j$}\\
+    0 & \quad \text{wpw}\\
+  \end{array} \right.
+\end{equation}
 
-Wektory te są ułorzone tak, aby tworzyły prawoskrętny układ: e1 x e2 = e3. Ruch bryły sztywnej g daje nam:
+Wektory te są ułożone tak, aby tworzyły prawoskrętny układ: $e_1 \times e_2 = e_3$. Ruch bryły sztywnej $g$ daje nam:
 
-g*(ei)^Tg*(ej) = dij, g*(e1) x g*(e2) = g*(e3).
+\begin{equation}
+g_*(e_i)^Tg_*(e_j) = d_{ij}, \quad g_*(e_1) \times g_*(e_2) = g_*(e_3)
+\end{equation}
 
-To znacza, że wektory wynikowe g*(e1),g*(e2),g*(e3) wciąż tworzą prawoskrętny ortonormalny układ. Więc bryła sztywna zawsze może być rozpoznawana przez prawoskrętny, ortonormalny układ, który będziemy nazywali 'object coordinate frame' lub 'body coordinate frame' oraz jej ruch może być w całości opisany przez ruch takiego układu.
+To znacza, że wektory wynikowe $g*(e1),g*(e2),g*(e3)$ wciąż tworzą prawoskrętny ortonormalny układ. Więc bryła sztywna zawsze może być rozpoznawana przez prawoskrętny, ortonormalny układ, który będziemy nazywali 'object coordinate frame' lub 'body coordinate frame' oraz jej ruch może być w całości opisany przez ruch takiego układu.
 
 W szczególności powinnieśmy ustalić relację między kamerą a resztą świata. Możemy np. ustalić, że 'world frame' jest związany z obiektem kamery i reszta obiektów porusza się względem niej.
 
-3) Ruch obrotowy i jego reprezentacje
 
-- Reprezentacja obrotu poprzez macierze ortogonalne
+\section{Ruch obrotowy i jego reprezentacje}
 
-Załóżmy, że mamy bryłę sztywną obracającą się wokół ustalonego punktu o \in E^3. Załóżmy, że w tym punkcie znajduje się też początek układu W będący 'world frame'em'. Zaczepimy do 'o' jeszcze jeden układ C, będący obracającą się kamerą. Relacja między tymi dwoma ukłądami współrzędnych ilustruje poniższy rysunek:
+\subsection{Reprezentacja obrotu poprzez macierze ortogonalne}
 
-(rysynek 1)
+Załóżmy, że mamy bryłę sztywną obracającą się wokół ustalonego punktu $o \in \E^3$. Załóżmy, że w tym punkcie znajduje się też początek układu globalnego W. Zaczepimy do 'o' jeszcze jeden układ C, będący obracającą się kamerą. Relacja między tymi dwoma ukłądami współrzędnych ilustruje poniższy rysunek:
+
+TUTAJ WSTAW RYSUNEK 1
 
 Konfiguracja układu C względem ukłądu W jest wyznaczona przez współrzędne trzech ortonormalnych wektorów 
 
+\begin{equation}
 r1=g*(e1), r2=g*(e2), r3=g*(e3) \in R^3
+\end{equation}
 
 r1,r2,r3 są po prostu wektorami jednostkowymi położonymi na współrzędnych x,y,z układu C. Konfiguracja obracającego się układu jest wtedy w całości wyznaczona przez macierz 3x3:
 
+\begin{equation}
 Rwc = [r1,r2,r3] \in R^3x3 
+\end{equation}
 
 gdzie r1,r2,r3 są ułorzone kolumnami. Z tego że r1,r2,r3 tworzą układ ortonormalny mamy:
 
+\begin{equation}
 (wzor 10)
+\end{equation}
 
 Co może by zapisane w postaci macierzy:
 
+\begin{equation}
 R_wc^TR_wc = R_wcR_wc^T = I
+\end{equation}
 
 Każda macierz spełniająca powyższą zależność nazwya się macierzę ortogonalną. Z definicji wynika również, że:
 
+\begin{equation}
 R_wc^-1 = R_wc^T. 
+\end{equation}
 
 Z tego że r1,r2,r3 tworzą ukłąd prawoskrętny, wymagamy aby wyznacznik macierzy R_wc był równy +1. Przestrzeń wszystkich takich ortogonalnych macierzy \in R^3x3 definiujemy jako:
 
+\begin{equation}
 SO(3)={R \in R^3x3 | R^TR = I, det(R)=+1}
+\end{equation}
 
 Takie macierze ortogonalne tradycyjnie nazwywają się macierzami obrotu (z wiadomych powodów). (rotation matrices). Side note: SO(3) z operacją mnożenia macierzy tworzą grupę. SO(3) nazwya się czasem grupą obrotową. 
 
 Example:
 
+\begin{equation}
 (wzor 11)
+\end{equation}
 
 Wracajac do rysunku, każda macierz obrotu R_wc \in SO(3) reprezentuje możliwą konfigurację obiektu obruconego wokół punktu o. Ponadto taka macierz reprezentuje transformację z układu współrzędnych C do W. Konfiguracja ciągle obracającego się obiektu można opisać jako funkcja trajetorii R(t): t -> SO(3) w przestrzeni SO(3). Jeśli t=/=0, obrót pomiędzy czasem t2 i t1 opiszemy jako R(t2,t1). W prosty sposób można wywnioskować iż:
 
+\begin{equation}
 R(t2,t0) = R(t2,t1)R(t1,t0) for all t0 < t1 < t2 \in R
+\end{equation}
 
-- Reprezentacja obrotu poprzez 'Canonical exponential coordinates' / 'Axis-angle representation'
+\subsection{Reprezentacja obrotu przez współrzędne eksponentne}
 
 Wg autora jest bardziej intuicyjny. Obrót jest parametryzowany poprzez dwie rzeczy:
 
-- wektor jednostkowy wychodzący z układu
-- kąt obrotu wektora (prawoskrętnie)
+\begin{itemize}
+\item wektor jednostkowy wychodzący z układu
+\item kąt obrotu wektora (prawoskrętnie)
+\end{itemize}
 
 Wygląda obiecująco, ale czy na pewno można w ten sposób reprezentować każdy obrót bryły sztywnej? Trzeba to udowodnić. Zacznamy od początku.
 
-Mamy trajetorię R(t): R -> SO(3) która wyznacza ciągły ruch obrotowy. Obrót musi spełniać warunek:
+Mamy trajetorię $R(t): \R \rightarrow SO(3)$, która wyznacza ciągły ruch obrotowy. Obrót musi spełniać warunek:
 
+\begin{equation}
 (wzor 12)
+\end{equation}
 
 Oznacza to, że macierz R.(t)R^T(t) \in R^3x3 jest antysymetryczna. Czyli musi istnieć wektor w^(t) \in R^3 taki że:
 
+\begin{equation}
 R.(t)R^T(t) = w^(t) / x R(t) (z prawej)
+\end{equation}
+
+\begin{equation}
 R.(t) = w^(t)R(t)
+\end{equation}
 
 Teraz wykorzystamy tą wiedzę do stworzenia użytecznej reprezentacji macierzy rotacyjnej. Zacznijmy od założenia, że w^ jest ustalone. W tym równaniu możemy interpretować R(t) jako macierz przejścia ( macierz, której iloczyn z wektorem stanu x, z chwili początkowej t_0, daje stan x, w późniejszej chwili t) dla następującego liniowego równania różniczkowego zwyczajnego:
 
+\begin{equation}
 x.(t) = w^x(t), x(t) \in R^3
+\end{equation}
 
 wg autora oczywistym jest, że rozwiązaniu tego równania jest podane przez:
 
+\begin{equation}
 x(t) = e^w^t x(0)
+\end{equation}
 
 gdzie e^w^t jest eksponentą macierzy:
 
+\begin{equation}
 (wzor 13)
+\end{equation}
 
 zakładając że R(0)=I jest stanem początkowym rotacji otrzymujemy:
 
+\begin{equation}
 R(t) = e^w^t (to jest wazne, narysowac na tablicy)
+\end{equation}
 
 ABy sporwidzć czy rzeczywiście e^w^t jest macierzą rotacyjną można wprost z definicji eksponenty pokazać że
 
+\begin{equation}
 (wzor 14)
+\end{equation}
 
 Fizyczna interpretacja wzoru 13 jest taka, o której mówiliśmy na początku, czyli jeśli założymy ||w||=1 wtedy R(t)=e^w^t jest obrotem dookoła osi w \in R^3 o kąt t radianów. Ogólnie możemy t absorbować do w więc mamy R = e^w^ dla w o dowolnej długości.
 
@@ -216,33 +359,45 @@ Tw. Logarithm of SO(3). Dla każdego R \in SO(3), istnieje w \ R^3 takie, że R 
 
 Jest to tzw funckja z przestrzeni SO(3) do so(3). w^ = log(R)
 
+\begin{equation}
 (wzor 15)
+\end{equation}
 
 Dzięki temu tw. możemy w efektywny sposób obliczać wektor obrotu mając daną macierz obrotu, ale w jaki sposób efektywnie obliczyć macierz obrotu R = e^w^ mając dany wektor w? Z definicji eksponenty to tak nie bardzo. Możemy użyć następującego tw:
 
 Tw. wzór Rodrigues'a dla macierzy rotacyjnych. Mając dany w \in R^3, eksponenta macierzy R = e^w^ jest równa:
 
+\begin{equation}
 (wzor 16) caly dowod
+\end{equation}
 
-oczywiste jest ze jest ||w||=1 i t=2kpi dostaniemy identyczność. dla każdgo k. Więc transformacja z so do SO nie jest bijekcja. bo ma nieskończenie wiele elementów w SO3.
+Oczywiste jest, że jeśli $\| w \|=1$ i $t=2k\pi$, to dostaniemy identyczność (\forall k). Więc transformacja z $so(3)$ do $SO(3)$ nie jest bijekcją, bo ma nieskończenie wiele elementów w $SO(3)$.
 
-4) Reprezentacje ruchu bryły sztywnej
+\begin{comment}
+
+\section{Reprezentacje pełnego ruchu bryły sztywnej}
 
 Czyli ruch z rotacją oraz tranzlacją. Rysunek 3 przedstawia ruszający się obiekt z układem C do niego przypisanym. Aby opisać współrzeðne punktu p na obiekcie odnośnie do układu globalnego W, jest oczywiste że należy dodać do siebie wektor tranzlacji T_wc i wektor X_c ale opisany relatywnie do W. Z tego że X_c są współrzędnymi punktu p relatywnymi do układu C, mamy R_wcX_c, gdzie R_wc \in SO(3) jest rotacją między ukłądami W i C. Wtedy współrzędne X_w można otrzymać tak:
 
+\begin{equation}
 X_w = R_wcX_c + T_wc
+\end{equation}
 
 Zwykle będziemy oznaczali pełny ruch bryły sztywnej przez g_wc = (R_wc,T_wc) lub po prostu g = (R,T) jeśli układy współrzędnych będą w oczywisty sposób wynikały z kontekstu. Wtedy możemy reprezentować na raz rotację i translację pomiędzy dwoma ukłądami współrzędnych. W zwięzłęj formie piszemy:
 
+\begin{equation}
 X_w = g_wc(X_c)
+\end{equation}
 
 Zbiór wszsytkich możliwych konfiguracji bryły sztywnej może być opisany przez przestrzeń ruchów brył sztywnych:
 
+\begin{equation}
 SE(3) = {g = (R,T) | R \in SO(3), T \in R^3}
+\end{equation}
 
 Zauważmy, że g = (R,T) nie jest jeszcze  reprezenatcją macierzową dla SE(3).Żeby tak się stało złączenie dwóch ruchów bryły sztywnej musiało by być iloczynem dwóch macierzy. Aby uzyskać taką reprezentacją musimy wprowadzić pojęcie tzw. współrzędnych jednorodnych.
 
-- Reprezentacja jednorodna
+\subsection{Reprezentacja jednorodna}
 
 Jak niektórzy mogli już zauważyć, w odróżnieniu od samych rotacji obiektów, transformacja pełnego ruchu bryły sztywnej nie jest liniowa, lecz afiniczna. W ramach rzypomnienia: powiemy że dwa wektory są związane liniową transformacją jeśli u = Av dla pewnej macierzy A, i są związane transformacją afiniczną jeśli u = Av + b dla pewnej macierzy A i wektora b.
 
@@ -250,123 +405,172 @@ Nie boimy się mimo wszystko, bo możemy dokonać konwersji z transformacji afin
 
 W efekcie, takie rozszerzenie współrzędnych osadza przestrzeń euklidesową  E^3 w hiperpłaszczyźnie R^4 zamiast R^3. Współrzędne jednorodne wektora v = X(q) - X(p) są zdefiniowane jako różnica między jednorodbymi współrzędnymi dwóch punktów q,p stąd otrzymujemy:
 
+\begin{equation}
 (wzor 17)
+\end{equation}
 
 Zauważmy, że wektory w powyższej formie tworzą podprzesrzeń, w której wszystkie liniowe struktury oryginalnych wektrów v \in R^3 są zachowane w niezmienionej formie prez nową reprezentację. Teraz, używając nowej notacji możemy transformację afiniczną X_w = R_wcX_c+ T_wc przepisać w postaci liniowej:
 
+\begin{equation}
 (wzor 18)
+\end{equation}
 
 gdzie macierz g-_wc \in R^4x4 zwie się jednorodną reprezentacją ruchu brył sztywnych g_wc = (R_wc, T_wc) \in SE(3). Generalnie, jeśli g = (R,T) wtedy jego reprezentacją jednorodną jest macierz 
 
+\begin{equation}
 g-=|R T|  \in R^4x4
    |0 1|
+\end{equation}
 
 Zauważmy, że dzięki temu możemy reprezentować transformację współrzędnych bryły sztywnej przez liniowe mnożenie macierzy. Reprezentacja jednorodna g daje nam naturalną macierzową reprezentację SE(3):
 
+\begin{equation}
 SE(3) = { g- = .. | R \in SO(3), T \in R^3} \podzbior R^4x4
+\end{equation}
 
 Używając takiej reprezentacji w łatwy sposób można sprawdzić, że SE(3) spełnia wszystkie wymagania do bycia grupą. W szczególności for all g1 g2 g \in SE(3) mamy:
 
+\begin{equation}
 (wzor 19)
+\end{equation}
 
 W reprezentacji jednorodnej transformacja o wektor v = X(q) - X(p) \in R^3 wygląda tak:
 
+\begin{equation}
 (wzor 20)
+\end{equation}
 
 Czyli akcja jest po prostu opisana przez iloczyn macierzy. Słuchać może sobie sam zweryfikować, że g- faktycznie zachowuje iloczyn skalarny i iloczyn wektorowy, co dowodzi, że g- jest ruchem bryły sztywnej zgodnym z podaną wcześniej definiją. Jak widać, ruch brył sztywnej zachowuje się inaczej na punktach (które można obracać i przemieszczać) niż na wektorach (ktore można jedynie obracać)
 
-- Reprezentacja typu exponential coordinates
+\subsection{Reprezentacja przez współrzędne eksponentne}
 
 W punkcie 3.2 niniejszej prezentacji studiowaliśmy współrzędne eksponentne dla rotacji macierzy R \in SO(3). Podobna reprezentacja współrzędnych również istnieje dla reprezentacji jednorodnej ruchu bryły sztywnej g \in SE(3). Teraz dojdziemy do formy ostatecznej, która będzie wykorzystywana przez wszystkie następnych prezentacje. Pokażemy jak rozszerzyć, to co uzyskaliśmy w częci 3.2 na pełen ruch bryły sztywnej. Postępujemy analogicznie:
 
 Załóżmy, że mamy ciągle poruszającą się bryłę sztywną opisaną przez trajektorię na SE(3): g(t)=(R(t),T(t)). W postaci jednorodnej mamy:
 
+\begin{equation}
 (wzor 21)
+\end{equation}
 
 Analogicznie jak w przypadku rotacji eksponentnej, zbadajmy taką macierz:
 
+\begin{equation}
 (wzor 22)
+\end{equation}
 
 Wiemy, żę R.R^T(t) jest macierzą antysymetryczną, czyli istnieje w^(t) \in so(3) taki że w^(t)=R.R^T(t). Zdefiniujmy także wektor v(t) \in R^3 taki że v(t) = T.(t) - w^(t)T(t). Wtedy powyższe równanie zapiszemy tak:
 
+\begin{equation}
 (wzor 23)
+\end{equation}
 
 Jeśli następnie zdefiniujemy KSI^ \in R^4x4:
 
+\begin{equation}
 (wzor 24)
+\end{equation}
 
 To otrzymamy:
 
+\begin{equation}
 (wzor 25)
+\end{equation}
 
 Na KSI^ można wtedy patrzeć jako wektor stycznej do krzywej w g(t) i może być wykorzystany do aproksymowania g(t) lokalnie:
 
+\begin{equation}
 (wzor 26)
+\end{equation}
 
 macierz 4x4 w formie KSI^ nazywamy twistem (skrętem). zbiór wszystkich skrętów opisujemy:
 
+\begin{equation}
 (wzor 27)
+\end{equation}
 
 Zbiór se(3) nazywamy przestrzenią styczną (lub algebrą Lie) grupy SE(3). Zdefiniujemy również dwa operatory 'V' i 'n' dokonujące konwersji między skrętem a jego współrzędnymi:
 
+\begin{equation}
 (wzor 28)
+\end{equation}
 
 We współrzędnych skrętu KSI nazwiemy v = prędkość liniowa, w^ = prędkość kątowa; co będzie wskazywało na powiązanie z częcią tranzlacyjną lub rotacyjną pełnego ruchu bryły sztywnej. Załóżmy teraz, że KSI^ jest stały, w rówaniu:
 
+\begin{equation}
 g.(t) = KSI^g(t)
+\end{equation}
 
 znów otrzymujemy liniowe równanie różniczkowe zwyczajne, które po scałkowaniu daje nam:
 
+\begin{equation}
 (wzor 29)
+\end{equation}
 
 Zakłądając, że początkowy stan g(0)=I, dochodzimy do wniosku iż:
 
+\begin{equation}
 g(t) = e^KSI^t
+\end{equation}
 
 gdzie eksponenta skrętu jest dana jako:
 
+\begin{equation}
 (wzor 30)
+\end{equation}
 
 wykorzystując wzór Rodriguesa i inne ciekawe własności o któ¶ych autor nie wspomniał, można wyprowadzić taki oto wzór na e^KSI^:
 
+\begin{equation}
 (wzor 31)
+\end{equation}
 
 patrząc na ten wspaniały wzór od razu jesteśmy w stanie stwierdzić, że faktycznie e^KSI^ jest macierzą transformacji bryły sztywnej w SE(3). Tak się analogicznie jak w sekcji 3.2 możemy zdefiniować funkcję z se(3) do SE(3) jako:
 
+\begin{equation}
 (wzor 32)
+\end{equation}
 
 Znów trzeba sobie zadać pytanie, z uwagi na założenie żę KSI^ jest stałą, czy każdy ruch bryły sztywnej g \in SE(3) może być reprezentowany w formie eksponenty? Innymi słowy czy istnieje funkcja odwrotna/logarytmiczna. Odpowiedź oczywiście brzmi tak.
 
 Tw (Logarytm SE(3)) (wzor 33) wraz z dowodem.
 
 
-5) coordinate and velocity transformations
+\section{Przekształcenia współrzędnych i prędkości}
 
 W następnych rozdziałach często będziemy chcieli wiedzieć jak współrzędne punktu i jego prędkość zmieniają się gdy kamera się porusza. Taka wiedza jest potrzebna, gdyż zwykle wygodniej jest wybrać układ kamery jako 'reference frame' i opisywać ruch kamery i punktu relatywnie do tego układu. Jako że kamera może się poruszać, musiamy wiedzieć jak zamienić wartości takie jak współrzędne czy prędkość z jednego układu kamery do drugiego. W szczególności chcemy wiedzieć jak poprawnie wyrażać położenie i prędkość punktu względem kamery. Teraz zaprezentuję konwencję, która będzie stosowana do końca seminarium.
 
-- Zasady transformacji współrzędnych
+\subsection{Zasady transformacji współrzędnych}
 
 Czas t \in R będzie zwykle wykorzystany jako index ruchu kamery. Nawet w przypadku dyskretnym, gdy będzie podanych tylko klika 'snapshotów', wciąż będziemy wykorzystywać t jako index pozycji kamery i obrazka z jakim jest związany (czyli jaki generuje w danym momencie). Więc będziemy używali g(t)=(R(t),T(t)) \in SE(3) lub
 
+\begin{equation}
 (wzor 33)
+\end{equation}
 
 aby oznaczyć przemieszczenie między jakimś ustalonym układem W a kamerą C w czasie t \in R. Zauważcie, że pominąłem notację 'wc' w subindexach w notacji g_cw(t), bo to oczywiście wynika z kontekstu. Ponadto zakładamy, że g(0)=I, czyli w czasie t=0 kamera jest przystająca do układu świata W. Więc jeśli współrzędne punktu p \in E^3 ustawione względem układu W są podane jako X_0 = X(0), to współrzędne ustawione względem kamery w czasie t są podane jako
 
+\begin{equation}
 (wzor 34)
+\end{equation}
 
 lub w postaci jednorodnej:
 
+\begin{equation}
 (wzor 34 b)
+\end{equation}
 
 jeśli kamera znajduje się w miejscach g(t1), g(t2)...g(tm) w czasach t1,t2...tm, to współrzędne punktu p są podane jako (wzor 34 c)
 
 Jeśli tylko pozycja a nie czas będzie w danej chwili nas interesować będziemy pisali g_i zamiast g(t_i) i podobnie R_i zamiast R(t_i), T_i zamiast T(t_i) i X_i zamiast X(t_i). Więc mamy:
 
+\begin{equation}
 (wzor 35)
 
 Ponadto jeśli kamera nie startuje z t=0, ruch między kamerą w czasie t_2 a t_1 bęziemy oznaczać g(t_2,t_1) \in SE(3). Wtedy otrzymujemy następjącą zależność między współrzędnymi punktu p w różnych czasach:
 
+\begin{equation}
 (wzor 36)
+\end{equation}
 
 Weźme teraz trzecią pozycję kamery t = t_3 \in R, tak jak na poniższym rysunku:
 
@@ -374,62 +578,94 @@ Weźme teraz trzecią pozycję kamery t = t_3 \in R, tak jak na poniższym rysun
 
 Ruch między kamerą w t_3 a kamerą w t_2 oznaczamy g(t_3,t_2) a między kamerą w t_3 a t_1 oznaczamy g(t_3,_t1). Mamy wtedy następującą zależność między współrzędnymi:
 
+\begin{equation}
 (wzor 37)
+\end{equation}
 
 zauważmy że zachowana jest następująca zasada:
 
+\begin{equation}
 (wzor 38)
+\end{equation}
 
 zasada złożenia opisuje współerzędne X punktu p relatywnie do każdej pozycji kamery. Implikacją tej zasady jest również zasada inwersji:
 
+\begin{equation}
 (wzor 39)
+\end{equation}
 
 gdyż g(t_2,t_1)g(t_1,t_2)=g(t_2,t_2)=I
 
 W przypadku gdy czas nie ma dla nas dużego znaczenia, możemy zamienić oznaczenie g(t_i,t_j) na g_ij. Powyższe zasady zapisujemy wtedy jako:
 
+\begin{equation}
 (wzor 40)
+\end{equation}
 
-- Zasady transformacji prędkości
+\subsection{Zasady transformacji prędkości}
 
 Rozumiejąc już jak działa transformacja współrzędnych, należy teraz przestudiować jaki ma ona wpływ na prędkość. Wiemy, że współrzędne X(t) punktu p \in E^3 względem do ruszającej się kamery są funkcją od czasu t:
 
+\begin{equation}
 (wzor 41)
+\end{equation}
 
 oraz prędkość w punkcie p chwilowego układu kamery jest:
 
+\begin{equation}
 (wzor 42)
+\end{equation}
 
 Aby wyrazić X.(t) w formie wartości ruszającego się układu zamienimy X_0 na g_cw^-1X(t) i używając natacji skrętu definiujemy:
 
+\begin{equation}
 (wzor 43)
+\end{equation}
 
 Co można jeszcze inaczej zapisać jako
 
+\begin{equation}
 (wzor 44)
+\end{equation}
 
 z tego że V^c_cw(t) jest postaci
 
+\begin{equation}
 (wzor 45)
+\end{equation}
 
 możemy przepisać prędkość punktu w przestrzeni 3d (zamiast współrzędnych jednorodnych) jako:
 
+\begin{equation}
 (wzor 46) 
+\end{equation}
 
 Fizyczną interpretacją sybolu Vblabla jest prędkość układu globalnego ruszającego się względnie do układu kamery, potrząc z widoku kamery. Zwykle, by jasno ustalić fizyczne znaczenie prędkości, musimy podać prędkośc którego układu rusza się względem którego, i z którego układu patrzymy. Jeśli zmienimy pozycję, z której obserwujemy prędkość, wyrażenie zmienia się wraz ze zmianą widoku. Np. załóżmy że obserwator jest w innym układzie współrzędnych przemieszczonych względem układu kamery poprzez ruch bryły sztywnej g \in SE(3). Wtedy współrzędne tego samego punktu p względem tego układu są Y(t) = gX(t). Wyznaczamy prędkość w nowych układzie i otrzymujemy:
 
+\begin{equation}
 (wzor 47)
+\end{equation}
 
 Więc nowa prędkość (skręt) jest
 
+\begin{equation}
 (wzor 48)
+\end{equation}
 
 To jest ta sama wartość fizyczna ale obserwowana z innego punktu widokowego. Widzimy, że prędkości są połączone funkcją zdefiniowaną przez ruch g:
 
+\begin{equation}
 (wzor 49)
+\end{equation}
 
 to jest tzw. funkcja sprzężenia w przestrzeni se(3). Używając tej notacji w poprzednim przykładzie mamy V^ = sd_g(V^c_cw). Zauważmy żę sprzężenie przekształca prędkość z jednego układu do drugiego. Wykorzystując fakt że g_cw(t)g_wc(t)=I oczywistym jest, iż:
 
+\begin{equation}
 (wzor 50)
+\end{equation}
 
 więć Vblabla można interpretować jako negację prędkości kamery ruszającej się względem układu globalnego, patrząc z układu kamery.
+
+\end{comment}
+
+\end{document}
