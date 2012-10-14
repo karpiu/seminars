@@ -32,7 +32,6 @@ Instytut Informatyki}
 
 \begin{document}
 
-\pagestyle{fancy}
 \maketitle
 
 \section{Wstęp}
@@ -238,58 +237,68 @@ W szczególności powinnieśmy ustalić relację między kamerą a resztą świa
 
 \subsection{Reprezentacja obrotu poprzez macierze ortogonalne}
 
-Załóżmy, że mamy bryłę sztywną obracającą się wokół ustalonego punktu $o \in \E^3$. Załóżmy, że w tym punkcie znajduje się też początek układu globalnego W. Zaczepimy do 'o' jeszcze jeden układ C, będący obracającą się kamerą. Relacja między tymi dwoma ukłądami współrzędnych ilustruje poniższy rysunek:
+Załóżmy, że mamy bryłę sztywną obracającą się wokół ustalonego punktu $o \in \E^3$. Załóżmy, że w tym punkcie znajduje się też początek układu globalnego $W$. Zaczepimy do $o$ jeszcze jeden układ $C$, będący obracającą się kamerą. Relację między tymi dwoma układami współrzędnych ilustruje poniższy rysunek:
 
 TUTAJ WSTAW RYSUNEK 1
 
-Konfiguracja układu C względem ukłądu W jest wyznaczona przez współrzędne trzech ortonormalnych wektorów 
+Konfiguracja układu $C$ względem układu $W$ jest wyznaczona przez współrzędne trzech ortonormalnych wektorów 
 
 \begin{equation}
-r1=g*(e1), r2=g*(e2), r3=g*(e3) \in R^3
+r_1=g_*(e_1), r_2=g_*(e_2), r_3=g_*(e_3) \in \RR
 \end{equation}
 
-r1,r2,r3 są po prostu wektorami jednostkowymi położonymi na współrzędnych x,y,z układu C. Konfiguracja obracającego się układu jest wtedy w całości wyznaczona przez macierz 3x3:
+$r_1,r_2,r_3$ są po prostu wektorami jednostkowymi położonymi na współrzędnych $x,y,z$ układu $C$. Konfiguracja obracającego się układu jest wtedy w całości wyznaczona przez macierz $3 \times 3$:
 
 \begin{equation}
-Rwc = [r1,r2,r3] \in R^3x3 
+R_{wc} = [r_1,r_2,r_3] \in \RRR 
 \end{equation}
 
-gdzie r1,r2,r3 są ułorzone kolumnami. Z tego że r1,r2,r3 tworzą układ ortonormalny mamy:
+\noindent gdzie $r_1,r_2,r_3$ są ułożone kolumnami. Z tego że $r_1,r_2,r_3$ tworzą układ ortonormalny, mamy:
 
 \begin{equation}
-(wzor 10)
+r^T_ir_j = \delta_{ij} = \left\{
+  \begin{array}{l l}
+    1 & \quad \text{jeśli $i=j$}\\
+    0 & \quad \text{wpw}\\
+  \end{array} \right.
+  \quad \forall i,j \in {1,2,3}
 \end{equation}
 
-Co może by zapisane w postaci macierzy:
+\noindent co może by zapisane w postaci macierzy:
 
 \begin{equation}
-R_wc^TR_wc = R_wcR_wc^T = I
+R_{wc}^TR_{wc} = R_{wc}R_{wc}^T = I
 \end{equation}
 
 Każda macierz spełniająca powyższą zależność nazwya się macierzę ortogonalną. Z definicji wynika również, że:
 
 \begin{equation}
-R_wc^-1 = R_wc^T. 
+R_{wc}^{-1} = R_{wc}^T. 
 \end{equation}
 
-Z tego że r1,r2,r3 tworzą ukłąd prawoskrętny, wymagamy aby wyznacznik macierzy R_wc był równy +1. Przestrzeń wszystkich takich ortogonalnych macierzy \in R^3x3 definiujemy jako:
+Z tego że $r_1,r_2,r_3$ tworzą układ prawoskrętny, wymagamy aby wyznacznik macierzy $R_{wc}$ był równy $+1$. Przestrzeń wszystkich takich ortogonalnych macierzy należących do $\RRR$ definiujemy jako:
 
 \begin{equation}
-SO(3)={R \in R^3x3 | R^TR = I, det(R)=+1}
+SO(3)=\{ R \in \RRR | R^TR = I, det(R)=+1 \}
 \end{equation}
 
-Takie macierze ortogonalne tradycyjnie nazwywają się macierzami obrotu (z wiadomych powodów). (rotation matrices). Side note: SO(3) z operacją mnożenia macierzy tworzą grupę. SO(3) nazwya się czasem grupą obrotową. 
+Takie macierze ortogonalne tradycyjnie nazwywają się macierzami rotacji (z wiadomych powodów). (rotation matrices). Side note: $SO(3)$ z operacją mnożenia macierzy tworzą grupę. Dlatego SO(3) nazywa się czasem grupą obrotową. 
 
-Example:
+\noindent Przykład:
 
 \begin{equation}
-(wzor 11)
+R_Z(\theta) = 
+\begin{bmatrix}
+  1 & 0 & 0 \\
+  0 & \cos(\theta) & -\sin(\theta) \\
+  0 & \sin(\theta) & \cos(\theta)
+\end{bmatrix}
 \end{equation}
 
-Wracajac do rysunku, każda macierz obrotu R_wc \in SO(3) reprezentuje możliwą konfigurację obiektu obruconego wokół punktu o. Ponadto taka macierz reprezentuje transformację z układu współrzędnych C do W. Konfiguracja ciągle obracającego się obiektu można opisać jako funkcja trajetorii R(t): t -> SO(3) w przestrzeni SO(3). Jeśli t=/=0, obrót pomiędzy czasem t2 i t1 opiszemy jako R(t2,t1). W prosty sposób można wywnioskować iż:
+Wracajac do rysunku, każda macierz obrotu $R_{wc} \in SO(3)$ reprezentuje możliwą konfigurację obiektu obruconego wokół punktu $o$. Ponadto taka macierz reprezentuje transformację z układu współrzędnych $C$ do $W$. Konfigurację ciągle obracającego się obiektu można opisać jako funkcję trajetorii $R(t): t \rightarrow SO(3)$ w przestrzeni $SO(3)$. Jeśli $t \neq 0$, obrót pomiędzy czasem $t_2$ i $t_1$ opiszemy jako $R(t_2,t_1)$. W prosty sposób można wywnioskować iż:
 
 \begin{equation}
-R(t2,t0) = R(t2,t1)R(t1,t0) for all t0 < t1 < t2 \in R
+R(t_2,t_0) = R(t_2,t_1)R(t_1,t_0) \quad \forall t_0 < t_1 < t_2 \in \R
 \end{equation}
 
 \subsection{Reprezentacja obrotu przez współrzędne eksponentne}
@@ -306,78 +315,114 @@ Wygląda obiecująco, ale czy na pewno można w ten sposób reprezentować każd
 Mamy trajetorię $R(t): \R \rightarrow SO(3)$, która wyznacza ciągły ruch obrotowy. Obrót musi spełniać warunek:
 
 \begin{equation}
-(wzor 12)
+R(t)R^T(t)=I
 \end{equation}
 
-Oznacza to, że macierz R.(t)R^T(t) \in R^3x3 jest antysymetryczna. Czyli musi istnieć wektor w^(t) \in R^3 taki że:
+Obliczając pochodną w powyższym równaniu po zmiennej $t$ i zauważywszy, że prawa strona jest macierzą stałą, otrzymujemy:
 
 \begin{equation}
-R.(t)R^T(t) = w^(t) / x R(t) (z prawej)
+\dot{R}(t)R^T(t) + R(t)\dot{R}^T(t)=0 \Rightarrow \dot(R)(t)R^T(t)=-(\dot(R)(t)R^T(t))^T
+\end{equation}
+
+Oznacza to, że macierz $\dot{R}(t)R^T(t) \in \RRR$ jest antysymetryczna. Czyli musi istnieć wektor $\hat{\omega}(t) \in \RR$ taki, że:
+
+\begin{equation}
+\dot{R}(t)R^T(t) = \hat{\omega}(t)
+\end{equation}
+
+\noindent a po pomnożeniu obustronnie przez $R(t)$:
+
+\begin{equation}
+\dot{R}(t) = \hat{\omega}(t)R(t)
+\end{equation}
+
+Teraz wykorzystamy tą wiedzę do stworzenia użytecznej reprezentacji macierzy rotacyjnej. Zacznijmy od założenia, że $\hat{\omega}$ jest ustalone. W tym równaniu możemy interpretować $R(t)$ jako macierz przejścia (macierz, której iloczyn z wektorem stanu $x$, w chwili początkowej $t_0$, daje stan $x$, w późniejszej chwili $t$) dla następującego liniowego równania różniczkowego zwyczajnego:
+
+\begin{equation}
+\dot{x}(t) = \hat{\omega}x(t), \quad x(t) \in \RR
+\end{equation}
+
+\noindent Wg autora oczywistym jest, że rozwiązanie tego równania jest podane przez:
+
+\begin{equation}
+x(t) = e^{\hat{\omega}t}x(0)
+\end{equation}
+
+\noindent gdzie $e^{\hat{\omega}t}$ jest eksponentą macierzy:
+
+\begin{equation}
+e^{\hat{\omega}t} = I + \hat(\omega)t + frac{(\hat(\omega)t)^2}{2!} + \cdots + frac{(\hat(\omega)t)^n}{n!} + \cdots
+\end{equation}
+
+Zakładając że $R(0)=I$ jest stanem początkowym rotacji otrzymujemy:
+
+\begin{equation}
+R(t) = e^{\hat{\omega}t}
+\end{equation}
+
+Aby sprawdzić, czy rzeczywiście $e^{\hat{\omega}t}$ jest macierzą rotacyjną, można wprost z definicji eksponenty pokazać, że:
+
+\begin{equation}
+(e^{\hat{\omega}t})^{-1}=e^{-\hat{\omega}t}=e^{\hat{\omega}^Tt}=(e^{\hat{\omega}t})^T
+\end{equation}
+
+Czyli $(e^{\hat{\omega}t})^Te^{\hat{\omega}t}=I$. Fizyczna interpretacja $R(t) = e^{\hat{\omega}t}$ jest taka, o której mówiliśmy na początku tego działu, czyli jeśli założymy, że $\| \omega \| = 1$, wtedy $R(t)=e^{\hat{\omega}t}$ jest obrotem dookoła osi $\omega \in \RR$ o kąt $t$ radianów. Ogólnie możemy $t$ absorbować do $\omega$, więc mamy $R = e^{\hat{\omega}}$ dla $\omega$ o dowolnej długości.
+
+Eksponenta definiuje funkcję z przestrzeni $so(3)$ do przestrzeni $SO(3)$, zwie się to ``exponential map''. 
+
+Zauważmy że otrzymaliśmy wzór $R(t) = e^{\hat{\omega}t}$ zakładając, że $\omega(t)$ jest stały. Ale oczywiście nie zawsze tak jest. Wtedy naturalnie powstaje pytanie: czy każda macierz rotacyjna $R \in SO(3)$ może być wyrażona w formie eksponenty? Odpowiedź brzmi: tak, i fakt ten pokazuje poniższe twierdzenie:
+
+\begin{theo}[logarytm SO(3)]
+Dla każdego $R \in SO(3)$, istnieje $\omega \in \RR$ takie, że $R = e^{\hat{\omega}}$. 
+\end{theo}
+
+\noindent Jest to tzw. funckja z przestrzeni $SO(3)$ do $so(3)$. Zapisujemy $\hat{\omega} = log(R)$
+
+\begin{equation}
+R = 
+\begin{bmatrix}
+  r_{11} & r_{12} & r_{13} \\
+  r_{21} & r_{22} & r_{23} \\
+  r_{31} & r_{32} & r_{33}
+\end{bmatrix}
 \end{equation}
 
 \begin{equation}
-R.(t) = w^(t)R(t)
+\theta = \| \omega \| = \arccos(\frac{trace(R)-1}{2})
 \end{equation}
-
-Teraz wykorzystamy tą wiedzę do stworzenia użytecznej reprezentacji macierzy rotacyjnej. Zacznijmy od założenia, że w^ jest ustalone. W tym równaniu możemy interpretować R(t) jako macierz przejścia ( macierz, której iloczyn z wektorem stanu x, z chwili początkowej t_0, daje stan x, w późniejszej chwili t) dla następującego liniowego równania różniczkowego zwyczajnego:
 
 \begin{equation}
-x.(t) = w^x(t), x(t) \in R^3
+\omega = \frac{1}{2\sin(\theta)}
+\begin{bmatrix}
+  r_{32} - r_{23} \\ r_{13} - r_{31} \\ r_{21} - r_{12}
+\end{bmatrix}
 \end{equation}
 
-wg autora oczywistym jest, że rozwiązaniu tego równania jest podane przez:
+Dzięki temu twierdzeniu możemy w efektywny sposób obliczać wektor obrotu mając daną macierz obrotu, ale w jaki sposób efektywnie obliczyć macierz obrotu $R = e^{\hat{\omega}}$ mając dany wektor $\omega$? Z definicji eksponenty to tak nie bardzo. Możemy użyć następującego twierdzenia:
+
+\begin{theo}[wzór Rodrigues'a dla macierzy rotacyjnych]
+Mając dany $\omega \in \RR$, eksponenta macierzy $R = e^{\hat{\omega}}$ jest równa:
+\end{theo}
 
 \begin{equation}
-x(t) = e^w^t x(0)
+e^{\hat{\omega}}=I + \frac{\hat{\omega}}{\| \omega \|}\sin(\| \omega \|) + \frac{\hat{w}^2}{\| \omega \|^2}(1 - \cos(\| \omega \|))
 \end{equation}
 
-gdzie e^w^t jest eksponentą macierzy:
+\noindent Wprost z definicji eksponenty możemy zapisać:
 
 \begin{equation}
-(wzor 13)
+e^{\hat{\omega}t}= I + \hat{w}(t - \frac{t^3}{3!} + \frac{t^5}{5!} - \cdots) + \hat{w}^2(\frac{t^2}{2!} - \frac{t^4}{4!} + \frac{t^6}{6!} - \cdots)
 \end{equation}
 
-zakładając że R(0)=I jest stanem początkowym rotacji otrzymujemy:
+\noindent Co w zasadzie kończy dowód.
 
-\begin{equation}
-R(t) = e^w^t (to jest wazne, narysowac na tablicy)
-\end{equation}
-
-ABy sporwidzć czy rzeczywiście e^w^t jest macierzą rotacyjną można wprost z definicji eksponenty pokazać że
-
-\begin{equation}
-(wzor 14)
-\end{equation}
-
-Fizyczna interpretacja wzoru 13 jest taka, o której mówiliśmy na początku, czyli jeśli założymy ||w||=1 wtedy R(t)=e^w^t jest obrotem dookoła osi w \in R^3 o kąt t radianów. Ogólnie możemy t absorbować do w więc mamy R = e^w^ dla w o dowolnej długości.
-
-Eksponenta definiuje funkcję z przestrzeni so(3) do przestrzeni SO(3), zwie się to exponential map. 
-
-Zauważmy że otrzymaliśmy wzór 13 zakładając, że w(t) jest stały. Ale oczywiście nie zawsze tak jest. Wtedy naturalnie postaje pytanie: czy każda macierz rotacyjna R \in SO(3) może być wyrażona w formie eksponenty? Odpowiedź brzmi: tak i fakt ten pokazuje poniższe twierdzenie:
-
-Tw. Logarithm of SO(3). Dla każdego R \in SO(3), istnieje w \ R^3 takie, że R = e^w^. 
-
-Jest to tzw funckja z przestrzeni SO(3) do so(3). w^ = log(R)
-
-\begin{equation}
-(wzor 15)
-\end{equation}
-
-Dzięki temu tw. możemy w efektywny sposób obliczać wektor obrotu mając daną macierz obrotu, ale w jaki sposób efektywnie obliczyć macierz obrotu R = e^w^ mając dany wektor w? Z definicji eksponenty to tak nie bardzo. Możemy użyć następującego tw:
-
-Tw. wzór Rodrigues'a dla macierzy rotacyjnych. Mając dany w \in R^3, eksponenta macierzy R = e^w^ jest równa:
-
-\begin{equation}
-(wzor 16) caly dowod
-\end{equation}
-
-Oczywiste jest, że jeśli $\| w \|=1$ i $t=2k\pi$, to dostaniemy identyczność (\forall k). Więc transformacja z $so(3)$ do $SO(3)$ nie jest bijekcją, bo ma nieskończenie wiele elementów w $SO(3)$.
+Oczywiste jest, że jeśli $\| w \|=1$ i $t=2k\pi$, to dostaniemy identyczność ($\forall k$). Więc transformacja z $so(3)$ do $SO(3)$ nie jest bijekcją, bo ma nieskończenie wiele elementów w $SO(3)$.
 
 \begin{comment}
 
 \section{Reprezentacje pełnego ruchu bryły sztywnej}
 
-Czyli ruch z rotacją oraz tranzlacją. Rysunek 3 przedstawia ruszający się obiekt z układem C do niego przypisanym. Aby opisać współrzeðne punktu p na obiekcie odnośnie do układu globalnego W, jest oczywiste że należy dodać do siebie wektor tranzlacji T_wc i wektor X_c ale opisany relatywnie do W. Z tego że X_c są współrzędnymi punktu p relatywnymi do układu C, mamy R_wcX_c, gdzie R_wc \in SO(3) jest rotacją między ukłądami W i C. Wtedy współrzędne X_w można otrzymać tak:
+Czyli ruch z rotacją oraz tranzlacją. Rysunek 3 przedstawia ruszający się obiekt z układem C do niego przypisanym. Aby opisać współrzedne punktu p na obiekcie odnośnie do układu globalnego W, jest oczywiste że należy dodać do siebie wektor tranzlacji T_wc i wektor X_c ale opisany relatywnie do W. Z tego że X_c są współrzędnymi punktu p relatywnymi do układu C, mamy R_wcX_c, gdzie R_wc \in SO(3) jest rotacją między ukłądami W i C. Wtedy współrzędne X_w można otrzymać tak:
 
 \begin{equation}
 X_w = R_wcX_c + T_wc
