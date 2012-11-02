@@ -118,6 +118,7 @@ Zakładamy, że graf początkowy $G_0=\tuple{V}{E_0}$ jest grafem bez krawędzi,
 
 
 %%% PIERWSZA PARTIA
+\begin{comment}
 \begin{frame}{Przykład}
 
 \begin{columns}
@@ -226,8 +227,201 @@ Każdy komponent z $G_i$ jest albo kompenentem z $G_{i-1}$, albo sumą pewnych k
 \end{tikzpicture}}
 
 \end{frame}
+\end{comment}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{frame}{Oko}
+
+\begin{frame}{Lowest Common Ancestor}
+\begin{obs}
+Jeśli (w jakiś sposób) będziemy przechowywać las komponentów dla ciągu $G_0,G_1 \cdots G_t$, to operacja \emp{Query} może być zredukowana do zapytania \emp{LCA} na tym lesie.
+\end{obs}
+
+\begin{block}{Przypomnienie}
+Wiadomo, że można wykonać preprocessing na lasie o liczbie wierzchołków \alert{$O(n)$}, w czasie \alert{$O(n)$} tak, aby zapytania \emp{LCA} wykonywać w czasie stałym \alert{$O(1)$}. Żródła:
+
+\vspace{0.1cm}
+{\small\textit{D. Harel and R. Tarjan. Fast algorithms for finding nearest common ancestros. SIAM Journal on Computing, 13:338-355, 1984.}}
+
+\vspace{0.1cm}
+{\small\textit{B. Shieber and U. Vishkin. On finding lowest common ancestors: Simplification and parallelization. SIAM Journal on Computing, 17:1253-1262, 1988.}}
+\end{block}
+\end{frame}
+
+\begin{frame}{Dynamic edge partitioning}
+\begin{df}
+Mamy dane zbiory krawędzi $E_1 \subseteq E_2 \subseteq \cdots \subseteq E_t$. Dla każdego $i=1\dots t$, \textbf{dynamiczny zbiór krawędzi} $H_i$ grafu $G_i$ jest zdefiniowany jako:
+
+\vspace{0.4cm}
+{\small $H_i = \{(u,v)\in E_i | Query(u,v,i) \wedge (\neg Query(u,v,i-1) \vee (u,v) \notin E_{i-1})\}$}
+
+\vspace{0.4cm}
+oraz
+
+\vspace{0.4cm}
+{\small $H_{t+1} = E_t \setminus \cup^t_{i=1}H_i$}
+
+\end{df}
+\end{frame}
+
+%%%% DRUGA PARTIA
+\begin{comment}
+\begin{frame}{Przykład}
+
+\begin{columns}
+\begin{column}{0.25\textwidth}
+\begin{center}$G_0$\end{center}
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm,
+  thick,main node/.style={circle,fill=blue!20,draw,font=\sffamily\Large\bfseries}]
+
+  \node[main node,scale=0.6] (1) {1};
+  \node[main node,scale=0.6] (2) [below right of=1] {2};
+  \node[main node,scale=0.6] (3) [below of=2] {3};
+  \node[main node,scale=0.6] (4) [below left of=3] {4};
+  \node[main node,scale=0.6] (6) [below left of=1] {6};
+  \node[main node,scale=0.6] (5) [below of=6] {5};
+\end{tikzpicture}
+\end{column}
+
+\begin{column}{0.25\textwidth}
+\begin{center}$G_1$\end{center}
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm,
+  thick,main node/.style={circle,fill=blue!20,draw,font=\sffamily\Large\bfseries}]
+
+  \fill[fill=blue,fill opacity=0.4] ($(6.west)+(-0.25,0.4)$) -- ($(6.east)+(0.25,0.4)$) -- ($(5.east)+(0.25,-0.4)$) -- ($(5.west)+(-0.25,-0.4)$) -- cycle; 
+
+  \node[main node,scale=0.6] (1) {1};
+  \node[main node,scale=0.6] (2) [below right of=1] {2};
+  \node[main node,scale=0.6] (3) [below of=2] {3};
+  \node[main node,scale=0.6] (4) [below left of=3] {4};
+  \node[main node,scale=0.6] (6) [below left of=1] {6};
+  \node[main node,scale=0.6] (5) [below of=6] {5};
+
+  \path
+    (3) edge node [left] {} (4)
+    (5) edge [line width=1.5pt,orange!70,bend left] node[left] {} (6)
+    (6) edge [line width=1.5pt,orange!70,bend left] node[left] {} (5)
+        edge node[right] {} (1);
+\end{tikzpicture}
+\end{column}
+
+\begin{column}{0.25\textwidth}
+\begin{center}$G_2$\end{center}
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm,
+  thick,main node/.style={circle,fill=blue!20,draw,font=\sffamily\Large\bfseries}]
+
+\fill[fill=green,fill opacity=0.4] ($(6.west)+(-0.25,0.4)$) -- ($(6.east)+(0.25,0.4)$) -- ($(3.east)+(0.25,0.4)$) -- ($(3.east)+(0.25,-1.25)$) -- ($(5.west)+(-0.25,-1.25)$) -- cycle; 
+
+  \node[main node,scale=0.6] (1) {1};
+  \node[main node,scale=0.6] (2) [below right of=1] {2};
+  \node[main node,scale=0.6] (3) [below of=2] {3};
+  \node[main node,scale=0.6] (4) [below left of=3] {4};
+  \node[main node,scale=0.6] (6) [below left of=1] {6};
+  \node[main node,scale=0.6] (5) [below of=6] {5};
+
+  \path
+    (3) edge [line width=1.5pt,orange!70] node [left] {} (4)
+    (5) edge [bend left] node[left] {} (6)
+        edge [line width=1.5pt,orange!70] node [right] {} (3)
+    (4) edge [line width=1.5pt,orange!70,bend right] node [left] {} (6)
+    (6) edge [bend left] node[left] {} (5)
+        edge node[right] {} (1);
+\end{tikzpicture}
+\end{column}
+
+\begin{column}{0.25\textwidth}
+\begin{center}$G_3$\end{center}
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm,
+  thick,main node/.style={circle,fill=blue!20,draw,font=\sffamily\Large\bfseries}]
+
+\fill[fill=red,fill opacity=0.4] ($(6.west)+(-0.25,0.4)$) -- ($(2.east)+(0.25,0.4)$) -- ($(3.east)+(0.25,-1.20)$) -- ($(5.west)+(-0.25,-1.20)$) -- cycle;
+
+  \node[main node,scale=0.6] (1) {1};
+  \node[main node,scale=0.6] (2) [below right of=1] {2};
+  \node[main node,scale=0.6] (3) [below of=2] {3};
+  \node[main node,scale=0.6] (4) [below left of=3] {4};
+  \node[main node,scale=0.6] (6) [below left of=1] {6};
+  \node[main node,scale=0.6] (5) [below of=6] {5};
+
+  \path
+    (2) edge [line width=1.5pt,orange!40] node {} (3)
+    (3) edge node [left] {} (4)
+    (5) edge [bend left] node[left] {} (6)
+        edge node [right] {} (3)
+    (4) edge [bend right] node [left] {} (6)
+    (6) edge [bend left] node[left] {} (5)
+        edge node[right] {} (1)
+        edge [line width=1.5pt,orange!40] node[right] {} (2);
+\end{tikzpicture}
+\end{column}
+\end{columns}
+
+\vspace{0.3cm}
+\begin{center}Do zbioru $H_{t+1}=H_4$ należy krawędź $\{6,1\}$.\end{center}
+
+\end{frame}
+\end{comment}
+%%%%%%%%%%
+
+\begin{frame}{Dynamic set partitioning}
+\begin{itemize}
+\item $E_t = \cup^{t+1}_{i=1}H_i$
+\item $H_i \cap H_j = \phi$ dla każdego $1 \leq i < j \leq t+1$
+\item Zbiór $H_i$ jest złożony ze wszystkich krawędzi łączących dwa różne komponenty w $G_{i-1}$ lub takich, które nie znajdują się w $G_{i-1}$, ale łączą dwa różne komponenty w $G_i$.
+\end{itemize}
+
+\begin{block}{}
+Taki podział jest \textbf{dynamiczny} ze względu na to, że każda zmiana w lesie komponentów może powodować przeniesienie krawędzi z $H_i$ do $H_j$, dla $i < j$.
+\end{block}
+\end{frame}
+
+\begin{frame}{Algorytm}
+Struktury:
+\begin{itemize}
+\item \emp{parent} - tablica przechowująca dla każdego wierzchołka w lesie, wskaźnik do jego ojca
+\item \emp{version} - tablica przechowująca dla każdego wierzchołka w której wersji grafu po raz pierwszy pojawił się komponent związany z tym wierzchołkiem
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Algorytm - procedury}
+\begin{center}
+\includegraphics[scale=0.4]{Init.png}
+\end{center}
+
+\begin{obs}
+Dwa wierzchołki $u$ i $v$ należą do tego samego komponentu w $G_i$ wtedy i tylko wtedy, gdy wersja ich najniższego wspólnego przodka jest mniejsza bądź równa $i$.
+\end{obs}
+
+\begin{center}
+\includegraphics[scale=0.4]{Query.png}
+\end{center}
+\end{frame}
+
+\begin{frame}{Algorytm - procedury}
+\begin{center}
+\includegraphics[scale=0.4]{Insert.png}
+\end{center}
+
+\begin{itemize}
+\item \emp{FindScc(H,i)} - 
+\item \emp{Shift($H_1$,$H_2$)} -
+\item \emp{Pre-LCA(parent)} - 
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Algorytm - procedury}
+\begin{center}
+\includegraphics[scale=0.4]{FindScc.png}
+\end{center}
+
+\begin{center}
+\includegraphics[scale=0.4]{Shift.png}
+\end{center}
+\end{frame}
+
+\begin{frame}{Algorytm - procedury}
+\begin{center}
+\includegraphics[scale=0.4]{Delete.png}
+\end{center}
 \end{frame}
 
 \end{document}
