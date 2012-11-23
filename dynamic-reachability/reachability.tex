@@ -116,120 +116,16 @@ Zakładamy, że graf początkowy $G_0=\tuple{V}{E_0}$ jest grafem bez krawędzi,
 \end{block}
 \end{frame}
 
-
-%%% PIERWSZA PARTIA
-\begin{comment}
-\begin{frame}{Przykład}
-
-\begin{columns}
-\begin{column}<1->{0.25\textwidth}
-\begin{center}$G_0$\end{center}
-\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm,
-  thick,main node/.style={circle,fill=blue!20,draw,font=\sffamily\Large\bfseries}]
-
-  \node[main node,scale=0.6] (1) {1};
-  \node[main node,scale=0.6] (2) [below right of=1] {2};
-  \node[main node,scale=0.6] (3) [below of=2] {3};
-  \node[main node,scale=0.6] (4) [below left of=3] {4};
-  \node[main node,scale=0.6] (6) [below left of=1] {6};
-  \node[main node,scale=0.6] (5) [below of=6] {5};
-\end{tikzpicture}
-\end{column}
-
-\begin{column}<2->{0.25\textwidth}
-\begin{center}$G_1$\end{center}
-\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm,
-  thick,main node/.style={circle,fill=blue!20,draw,font=\sffamily\Large\bfseries}]
-
-  \fill<3->[fill=blue,fill opacity=0.4] ($(6.west)+(-0.25,0.4)$) -- ($(6.east)+(0.25,0.4)$) -- ($(5.east)+(0.25,-0.4)$) -- ($(5.west)+(-0.25,-0.4)$) -- cycle; 
-
-  \node[main node,scale=0.6] (1) {1};
-  \node[main node,scale=0.6] (2) [below right of=1] {2};
-  \node[main node,scale=0.6] (3) [below of=2] {3};
-  \node[main node,scale=0.6] (4) [below left of=3] {4};
-  \node[main node,scale=0.6] (6) [below left of=1] {6};
-  \node[main node,scale=0.6] (5) [below of=6] {5};
-
-  \path
-    (3) edge node [left] {} (4)
-    (5) edge [bend left] node[left] {} (6)
-    (6) edge [bend left] node[left] {} (5)
-        edge node[right] {} (1);
-\end{tikzpicture}
-\end{column}
-
-\begin{column}<4->{0.25\textwidth}
-\begin{center}$G_2$\end{center}
-\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm,
-  thick,main node/.style={circle,fill=blue!20,draw,font=\sffamily\Large\bfseries}]
-
-\fill<5->[fill=green,fill opacity=0.4] ($(6.west)+(-0.25,0.4)$) -- ($(6.east)+(0.25,0.4)$) -- ($(3.east)+(0.25,0.4)$) -- ($(3.east)+(0.25,-1.25)$) -- ($(5.west)+(-0.25,-1.25)$) -- cycle; 
-
-  \node[main node,scale=0.6] (1) {1};
-  \node[main node,scale=0.6] (2) [below right of=1] {2};
-  \node[main node,scale=0.6] (3) [below of=2] {3};
-  \node[main node,scale=0.6] (4) [below left of=3] {4};
-  \node[main node,scale=0.6] (6) [below left of=1] {6};
-  \node[main node,scale=0.6] (5) [below of=6] {5};
-
-  \path
-    (3) edge node [left] {} (4)
-    (5) edge [bend left] node[left] {} (6)
-        edge node [right] {} (3)
-    (4) edge [bend right] node [left] {} (6)
-    (6) edge [bend left] node[left] {} (5)
-        edge node[right] {} (1);
-\end{tikzpicture}
-\end{column}
-
-\begin{column}<6->{0.25\textwidth}
-\begin{center}$G_3$\end{center}
-\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm,
-  thick,main node/.style={circle,fill=blue!20,draw,font=\sffamily\Large\bfseries}]
-
-\fill<7->[fill=red,fill opacity=0.4] ($(6.west)+(-0.25,0.4)$) -- ($(2.east)+(0.25,0.4)$) -- ($(3.east)+(0.25,-1.20)$) -- ($(5.west)+(-0.25,-1.20)$) -- cycle;
-
-  \node[main node,scale=0.6] (1) {1};
-  \node[main node,scale=0.6] (2) [below right of=1] {2};
-  \node[main node,scale=0.6] (3) [below of=2] {3};
-  \node[main node,scale=0.6] (4) [below left of=3] {4};
-  \node[main node,scale=0.6] (6) [below left of=1] {6};
-  \node[main node,scale=0.6] (5) [below of=6] {5};
-
-  \path
-    (2) edge node {} (3)
-    (3) edge node [left] {} (4)
-    (5) edge [bend left] node[left] {} (6)
-        edge node [right] {} (3)
-    (4) edge [bend right] node [left] {} (6)
-    (6) edge [bend left] node[left] {} (5)
-        edge node[right] {} (1)
-        edge node[right] {} (2);
-\end{tikzpicture}
-\end{column}
-\end{columns}
-
-\only<8>{\vspace{0.5cm}\begin{obs}
-Każdy komponent z $G_i$ jest albo kompenentem z $G_{i-1}$, albo sumą pewnych komponentów z $G_{i-1}$.
-\end{obs}}
-
-\onslide<9->{\vspace{0.2cm}\begin{tikzpicture}[main node/.style={circle,fill=white!20,draw,font=\sffamily\Large\bfseries}]
-  \node[thick,circle,fill=blue,fill opacity=0.4,minimum width=0.4cm,draw] (g1) at (3.5,-2.45) {};
-  \node[thick,circle,fill=green,fill opacity=0.4,minimum width=0.4cm,draw] (g2) at (6.8,-1.65) {} edge (g1);
-  \node[thick,circle,fill=red,fill opacity=0.4,minimum width=0.4cm,draw] (g3) at (10,-0.55) {} edge (g2);
-  \node[main node,scale=0.55] (1) at (0,0) {1};
-  \node[main node,scale=0.55] (2) at (0,-0.57) {2} edge (g3);
-  \node[main node,scale=0.55] (3) at (0,-1.1) {3} edge (g2);
-  \node[main node,scale=0.55] (4) at (0,-1.65) {4} edge (g2);
-  \node[main node,scale=0.55] (5) at (0,-2.2) {5} edge (g1);
-  \node[main node,scale=0.55] (6) at (0,-2.75) {6} edge (g1);
-
-\end{tikzpicture}}
-
+\begin{frame}{Union-Find}
+Prosta struktura do pamiętania zbiorów rozłącznych.
+\begin{itemize}
+\item \emp{Find(a)} - zwraca reprezentanta zbioru $a$. 
+\item \emp{Union(Find(a),Find(b))} - łączy zbiory, zawierające $a$ i $b$
+\end{itemize}
+\begin{block}{Przypomnienie}
+Łączny czas wykonania $m$ operacji \emp{Union} i \emp{Find} na zbiorach rozłącznych, zawierających w sumie $n$ elementów, jest równy $O(m\cdot\alpha(m,n))$, gdzie $\alpha$ jest odwrotnością funkcji Ackermanna.
+\end{block}
 \end{frame}
-\end{comment}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 
 \begin{frame}{Lowest Common Ancestor}
 \begin{obs}
@@ -262,105 +158,6 @@ oraz
 
 \end{df}
 \end{frame}
-
-%%%% DRUGA PARTIA
-\begin{comment}
-\begin{frame}{Przykład}
-
-\begin{columns}
-\begin{column}{0.25\textwidth}
-\begin{center}$G_0$\end{center}
-\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm,
-  thick,main node/.style={circle,fill=blue!20,draw,font=\sffamily\Large\bfseries}]
-
-  \node[main node,scale=0.6] (1) {1};
-  \node[main node,scale=0.6] (2) [below right of=1] {2};
-  \node[main node,scale=0.6] (3) [below of=2] {3};
-  \node[main node,scale=0.6] (4) [below left of=3] {4};
-  \node[main node,scale=0.6] (6) [below left of=1] {6};
-  \node[main node,scale=0.6] (5) [below of=6] {5};
-\end{tikzpicture}
-\end{column}
-
-\begin{column}{0.25\textwidth}
-\begin{center}$G_1$\end{center}
-\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm,
-  thick,main node/.style={circle,fill=blue!20,draw,font=\sffamily\Large\bfseries}]
-
-  \fill[fill=blue,fill opacity=0.4] ($(6.west)+(-0.25,0.4)$) -- ($(6.east)+(0.25,0.4)$) -- ($(5.east)+(0.25,-0.4)$) -- ($(5.west)+(-0.25,-0.4)$) -- cycle; 
-
-  \node[main node,scale=0.6] (1) {1};
-  \node[main node,scale=0.6] (2) [below right of=1] {2};
-  \node[main node,scale=0.6] (3) [below of=2] {3};
-  \node[main node,scale=0.6] (4) [below left of=3] {4};
-  \node[main node,scale=0.6] (6) [below left of=1] {6};
-  \node[main node,scale=0.6] (5) [below of=6] {5};
-
-  \path
-    (3) edge node [left] {} (4)
-    (5) edge [line width=1.5pt,orange!70,bend left] node[left] {} (6)
-    (6) edge [line width=1.5pt,orange!70,bend left] node[left] {} (5)
-        edge node[right] {} (1);
-\end{tikzpicture}
-\end{column}
-
-\begin{column}{0.25\textwidth}
-\begin{center}$G_2$\end{center}
-\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm,
-  thick,main node/.style={circle,fill=blue!20,draw,font=\sffamily\Large\bfseries}]
-
-\fill[fill=green,fill opacity=0.4] ($(6.west)+(-0.25,0.4)$) -- ($(6.east)+(0.25,0.4)$) -- ($(3.east)+(0.25,0.4)$) -- ($(3.east)+(0.25,-1.25)$) -- ($(5.west)+(-0.25,-1.25)$) -- cycle; 
-
-  \node[main node,scale=0.6] (1) {1};
-  \node[main node,scale=0.6] (2) [below right of=1] {2};
-  \node[main node,scale=0.6] (3) [below of=2] {3};
-  \node[main node,scale=0.6] (4) [below left of=3] {4};
-  \node[main node,scale=0.6] (6) [below left of=1] {6};
-  \node[main node,scale=0.6] (5) [below of=6] {5};
-
-  \path
-    (3) edge [line width=1.5pt,orange!70] node [left] {} (4)
-    (5) edge [bend left] node[left] {} (6)
-        edge [line width=1.5pt,orange!70] node [right] {} (3)
-    (4) edge [line width=1.5pt,orange!70,bend right] node [left] {} (6)
-    (6) edge [bend left] node[left] {} (5)
-        edge node[right] {} (1);
-\end{tikzpicture}
-\end{column}
-
-\begin{column}{0.25\textwidth}
-\begin{center}$G_3$\end{center}
-\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm,
-  thick,main node/.style={circle,fill=blue!20,draw,font=\sffamily\Large\bfseries}]
-
-\fill[fill=red,fill opacity=0.4] ($(6.west)+(-0.25,0.4)$) -- ($(2.east)+(0.25,0.4)$) -- ($(3.east)+(0.25,-1.20)$) -- ($(5.west)+(-0.25,-1.20)$) -- cycle;
-
-  \node[main node,scale=0.6] (1) {1};
-  \node[main node,scale=0.6] (2) [below right of=1] {2};
-  \node[main node,scale=0.6] (3) [below of=2] {3};
-  \node[main node,scale=0.6] (4) [below left of=3] {4};
-  \node[main node,scale=0.6] (6) [below left of=1] {6};
-  \node[main node,scale=0.6] (5) [below of=6] {5};
-
-  \path
-    (2) edge [line width=1.5pt,orange!40] node {} (3)
-    (3) edge node [left] {} (4)
-    (5) edge [bend left] node[left] {} (6)
-        edge node [right] {} (3)
-    (4) edge [bend right] node [left] {} (6)
-    (6) edge [bend left] node[left] {} (5)
-        edge node[right] {} (1)
-        edge [line width=1.5pt,orange!40] node[right] {} (2);
-\end{tikzpicture}
-\end{column}
-\end{columns}
-
-\vspace{0.3cm}
-\begin{center}Do zbioru $H_{t+1}=H_4$ należy krawędź $\{6,1\}$.\end{center}
-
-\end{frame}
-\end{comment}
-%%%%%%%%%%
 
 \begin{frame}{Dynamic set partitioning}
 \begin{itemize}
@@ -402,11 +199,16 @@ Dwa wierzchołki $u$ i $v$ należą do tego samego komponentu w $G_i$ wtedy i ty
 \end{center}
 
 \begin{itemize}
-\item \emp{FindScc(H,i)} - 
-\item \emp{Shift($H_1$,$H_2$)} -
-\item \emp{Pre-LCA(parent)} - 
+\item \emp{FindScc($H_t$,$t$)} - aktualizuje las komponentów
+\item \emp{Shift($H_t$,$H_{t+1}$)} - wydziela zbiór $H_{t+1}$ z $H_t$
+\item \emp{Pre-LCA(parent)} - preprocesing dla zapytań LCA
 \end{itemize}
 \end{frame}
+
+\begin{frame}{Przykład}
+\centerline{\Large Pokaż przykład operacji Insert na rysunku 1}
+\end{frame}
+
 
 \begin{frame}{Algorytm - procedury}
 \begin{center}
@@ -422,6 +224,12 @@ Dwa wierzchołki $u$ i $v$ należą do tego samego komponentu w $G_i$ wtedy i ty
 \begin{center}
 \includegraphics[scale=0.4]{img/Delete.png}
 \end{center}
+\end{frame}
+
+\begin{frame}{Algorytm - złożoność}
+\begin{tw}
+Każda operacja \emp{Insert} wykonuje się w pesymistycznym czasie $O(m \alpha(m,n))$, a każda operacja \emp{Delete} w zamortyzowanym czasie $O(m \alpha(m,n))$. Złożoność pamięciowa to $O(m + n)$.
+\end{tw}
 \end{frame}
 
 \end{document}

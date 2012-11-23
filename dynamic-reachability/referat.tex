@@ -1,0 +1,113 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[top=2cm, bottom=2cm, left=2cm, right=2cm]{geometry}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage[utf8]{inputenc}
+\usepackage[polish]{babel}
+\usepackage{polski}
+\usepackage{verbatim}
+\usepackage{graphicx}
+
+\newcommand{\readslide}{\vspace{0.2cm} \noindent {\em czytaj ze slajdu} \vspace{0.2cm}}
+\newcommand{\insertimg}[1]{\vspace{0.2cm} \noindent {\em Tutaj wstaw rysunek #1} \vspace{0.2cm}}
+
+\title{Dynamic Reachability \\ Plan referatu}
+
+\author{M.~K.~Karpiński}
+
+\begin{document}
+
+\maketitle
+
+\section*{Slajd 1}
+
+Na dzisiejszym seminarium zajmiemy się dobrze znanym problemem grafowym. Mianowicie będzie to problem osiągalności w grafie skierowanym. Problem ten w wersji statycznej można zapisać w taki sposób.
+
+\section*{Slajd 2}
+
+\readslide
+
+\noindent Nas dzisiaj będzie interesować wersja dynamiczna problemu.
+
+\section*{Slajd 3}
+
+Co to dokładnie oznacza?
+
+\readslide
+
+\noindent Oczywiście chcemy, aby czasy wykonania tych operacji były jak najmniejsze.
+
+\section*{Slajd 4}
+
+Na początek zapomnijmy całkowicie o problemie osiągalności i przez pewien czas skupmy się na troszeczkę innym problemie, mianowicie problemie przynależenia do wspólnej silnie spójnej składowej. Tutaj na slajdzie mamy definicję SSS oraz przykładowy graf. Problem opisany jest następująco.
+
+\section*{Slajd 5}
+
+\readslide
+
+\noindent Ponadto dla mojej wygody zamiast mówić co chwilę SSS, będą mówił po prostu {\em komponent}. Gdybym co chwilę mówił silnie spójna składowa, to w końcu ugryzł bym się w język.
+
+\section*{Slajd 6}
+
+Algorytm, który za chwilę zaprezentuję ma pewną ciekawą własność, którą w jasny sposób opisują operacje jakie będziemy chcieli wykonywać. Oto one:
+
+\readslide
+
+\noindent Zauważmy, że mamy do czynienia z pewnym uproszczeniem: nie ma tutaj mowy o usuwaniu i dodawaniu wierzchołków. Operujemy jedynie na krawędziach. Autorzy pracy nie tłumaczą się z tego, ale domyślam się, że dodawanie wierzchołka jest trywialne, a usuwanie wierzchołka jest równoważne usunięciu wszystkich krawędzi wchodzących i wychodzących z tego wierzchołka. Więc wszystko sprowadza się do operacji na krawędziach.
+
+\section*{Slajd 7}
+
+Jeszcze raz, tylko bardziej formalnie:
+
+\readslide
+
+\noindent Dobrze byłoby narysować przykład, aby aby dokładniej zrozumieć ideę algorytmu.
+
+\insertimg{1}. Z komentarzem. Bez lasu!!
+
+\section*{Slajd 8}
+
+Z tego wynika, że komponenty możemy pamiętać w strukturze Union-Find, która jest dobrze znana z AISDu.
+
+\readslide
+
+\insertimg{1}. Las!!
+
+\section*{Slajd 9}
+
+\readslide
+
+\noindent Aby efektywnie przechowywać taki las komponentów, zdefiniujemy następujący podział krawędzi wszystich wersji grafu:
+
+\section*{Slajd 10}
+
+\readslide
+
+\noindent Na slajdzie może to wyglądać zbyt skomplikowanie, dlatego skorzystam z naszego przykładu, aby rozjaśnić tą definicję.
+
+\insertimg{1.2} Zbiory $H_1 \cdots H_{t+1}$.
+
+\section*{Slajd 11}
+
+Z podanej definicji widać, że podział krawędzi ma następujące własnośći:
+
+\readslide
+
+\section*{Slajd 12}
+
+Oprócz zużycia pamięci na struktury Union-Finda, LCA i podziału dynamicznego, dodatkowo zarezerwujemy sobie pamięć na dwie tablice:
+
+\readslide
+
+Teraz przechodzimy do włąściwego algorytmu.
+
+\section*{Slajd 13}
+
+\readslide
+
+\section*{Slajd 14}
+
+Następnie przyjrzyjmy się operacji Insert.
+
+\end{document}
