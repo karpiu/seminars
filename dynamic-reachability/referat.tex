@@ -22,33 +22,28 @@
 
 \section*{Slajd 1}
 
-Na dzisiejszym seminarium zajmiemy się dobrze znanym problemem grafowym. Mianowicie będzie to problem osiągalności w grafie skierowanym. Problem ten w wersji statycznej można zapisać w taki sposób.
+Na dzisiejszym seminarium zajmiemy się dobrze znanym problemem grafowym. Mianowicie będzie to problem Silnie spójnych składowych.
 
 \section*{Slajd 2}
 
 \readslide
 
-\noindent Nas dzisiaj będzie interesować wersja dynamiczna problemu.
+\noindent \noindent Ponadto dla mojej wygody zamiast mówić co chwilę SSS, będą mówił po prostu {\em komponent}. Gdybym co chwilę mówił silnie spójna składowa, to w końcu ugryzł bym się w język.
 
 \section*{Slajd 3}
 
-Co to dokładnie oznacza?
+\readslide
+
+\noindent Jednak - jak sugeruje tytuł mojego wystąpienia - nas dzisiaj będzie interesować wersja dynamiczna problemu. Co to dokładnie oznacza?
+
+\section*{Slajd 4}
 
 \readslide
 
 \noindent Oczywiście chcemy, aby czasy wykonania tych operacji były jak najmniejsze.
 
-\section*{Slajd 4}
-
-Na początek zapomnijmy całkowicie o problemie osiągalności i przez pewien czas skupmy się na troszeczkę innym problemie, mianowicie problemie przynależenia do wspólnej silnie spójnej składowej. Tutaj na slajdzie mamy definicję SSS oraz przykładowy graf. Problem opisany jest następująco.
 
 \section*{Slajd 5}
-
-\readslide
-
-\noindent Ponadto dla mojej wygody zamiast mówić co chwilę SSS, będą mówił po prostu {\em komponent}. Gdybym co chwilę mówił silnie spójna składowa, to w końcu ugryzł bym się w język.
-
-\section*{Slajd 6}
 
 Algorytm, który za chwilę zaprezentuję ma pewną ciekawą własność, którą w jasny sposób opisują operacje jakie będziemy chcieli wykonywać. Oto one:
 
@@ -56,7 +51,7 @@ Algorytm, który za chwilę zaprezentuję ma pewną ciekawą własność, któr�
 
 \noindent Zauważmy, że mamy do czynienia z pewnym uproszczeniem: nie ma tutaj mowy o usuwaniu i dodawaniu wierzchołków. Operujemy jedynie na krawędziach. Autorzy pracy nie tłumaczą się z tego, ale domyślam się, że dodawanie wierzchołka jest trywialne, a usuwanie wierzchołka jest równoważne usunięciu wszystkich krawędzi wchodzących i wychodzących z tego wierzchołka. Więc wszystko sprowadza się do operacji na krawędziach.
 
-\section*{Slajd 7}
+\section*{Slajd 6}
 
 Jeszcze raz, tylko bardziej formalnie:
 
@@ -66,7 +61,7 @@ Jeszcze raz, tylko bardziej formalnie:
 
 \insertimg{1}. Z komentarzem. Bez lasu!!
 
-\section*{Slajd 8}
+\section*{Slajd 7}
 
 Z tego wynika, że komponenty możemy pamiętać w strukturze Union-Find, która jest dobrze znana z AISDu.
 
@@ -74,13 +69,13 @@ Z tego wynika, że komponenty możemy pamiętać w strukturze Union-Find, która
 
 \insertimg{1}. Las!!
 
-\section*{Slajd 9}
+\section*{Slajd 8}
 
 \readslide
 
 \noindent Aby efektywnie przechowywać taki las komponentów, zdefiniujemy następujący podział krawędzi wszystich wersji grafu:
 
-\section*{Slajd 10}
+\section*{Slajd 9}
 
 \readslide
 
@@ -88,13 +83,13 @@ Z tego wynika, że komponenty możemy pamiętać w strukturze Union-Find, która
 
 \insertimg{1.2} Zbiory $H_1 \cdots H_{t+1}$.
 
-\section*{Slajd 11}
+\section*{Slajd 10}
 
 Z podanej definicji widać, że podział krawędzi ma następujące własnośći:
 
 \readslide
 
-\section*{Slajd 12}
+\section*{Slajd 11}
 
 Oprócz zużycia pamięci na struktury Union-Finda, LCA i podziału dynamicznego, dodatkowo zarezerwujemy sobie pamięć na dwie tablice:
 
@@ -102,12 +97,30 @@ Oprócz zużycia pamięci na struktury Union-Finda, LCA i podziału dynamicznego
 
 Teraz przechodzimy do włąściwego algorytmu.
 
-\section*{Slajd 13}
+\section*{Slajd 12}
 
 \readslide
 
-\section*{Slajd 14}
+\section*{Slajd 13}
 
 Następnie przyjrzyjmy się operacji Insert.
+
+\readslide i w ogole improwizuj
+
+\section*{Slajd 14}
+
+\section*{Slajd 15}
+
+\section*{Slajd 16}
+
+\readslide
+
+\noindent Z naszą strukturą możemy się jeszcze chwilę pobawić. Możemy np. wypisać na jakie komponenty rozłożył się stary komponent, po dokonaniu operacji Delete. Aby tego dokonać rozwarzmy dwa stany lasu komponentów, pierwszy - przed operacją Delete, drugi - zaraz po operacji Delete.
+
+\insertimg{ten na kartce kratkowanej}
+
+\section*{Slajd 17}
+
+
 
 \end{document}

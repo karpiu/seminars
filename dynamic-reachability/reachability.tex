@@ -20,8 +20,8 @@
 \newcommand{\red}[1]{\textcolor{red}{#1}}
 \newcommand{\tuple}[2]{\langle #1 , #2 \rangle}
 
-\title{A Fully Dynamic Reachability Algorithm for Directed Graphs}
-\subtitle{with an Almost Linear Update Time}
+\title{Fully Dynamic Strong Connectivity for Directed Graphs}
+\subtitle{with Persistency}
 \author{Michał Karpiński}
 \date{8 stycznia, 2013}
 
@@ -31,42 +31,7 @@
   \titlepage
 \end{frame}
 
-\begin{frame}{Specyfika problemu (wersja statyczna)}
-Dane: 
-
-\begin{itemize}
-\item graf skierowany $G$ oraz wierzchołki $u,v \in V(G)$
-\end{itemize}
-
-Wynik:
-
-\begin{itemize}
-\item Odpowiedź na pytanie: czy w $G$ istnieje ścieżka z $u$ do $v$?
-\end{itemize}
-
-\vspace{0.5cm}
-
-\begin{center}
-\includegraphics[scale=0.5]{img/Diagram1.png}
-\end{center}
-
-\end{frame}
-
-\begin{frame}{Specyfika problemu (wersja dynamiczna)}
-
-Różnica: graf $G$ zmienia się w czasie!
-
-
-\vspace{0.5cm}
-
-Cel: zbudowanie struktury danych wspierającej operacje:
-\begin{itemize}
-\item \emp{Update} - aktualizuje graf
-\item \emp{Query} - odpowiada na pytanie o osiągalność
-\end{itemize}
-\end{frame}
-
-\begin{frame}{Silnie spójne składowe (SSS)}
+\begin{frame}{Silnie spójne składowe}
 
 \begin{df}
 {\bf Silnie spójna składowa} grafu skierowanego $G$ to taki maksymalny podgraf $H$, a jednocześnie jego spójna składowa, taka, że pomiędzy każdymi dwoma jej wierzchołkami istnieje ścieżka.
@@ -78,22 +43,27 @@ Cel: zbudowanie struktury danych wspierającej operacje:
 
 \end{frame}
 
-\begin{frame}{Silnie spójne składowe (SSS)}
+\begin{frame}{Specyfika problemu}
+
 Problem: mając dany graf $G$, czy $u,v \in V(G)$ należą do tej samej silnie spójnej składowej?
 
 \vspace{0.5cm}
 
-\begin{itemize}
-\item wersja statyczna - proste
-\item wersja dynamiczna - zaraz się okaże :)
-\end{itemize}
+Rozwiązania dla wersja statycznej są znane. Możemy dokonać preprocessing w czasie liniowym tak, aby zapytania wykonywały się w czasie stałym.
+
+\end{frame}
+
+\begin{frame}{Specyfika problemu (wersja dynamiczna)}
+
+Różnica: graf $G$ zmienia się w czasie!
 
 \vspace{0.5cm}
 
-\begin{block}{Uwaga}
-Struktura rozwiązująca problem dynamiczny SSS jest kluczem do utworzenia struktury rozwiązującej problem dynamiczny osiągalności w grafie skierowanym!
-\end{block}
-
+Cel: zbudowanie struktury danych wspierającej operacje:
+\begin{itemize}
+\item \emp{Update} - aktualizuje graf
+\item \emp{Query} - odpowiada na pytanie o przynależność do komponentu
+\end{itemize}
 \end{frame}
 
 \begin{frame}{Porządane procedury}
@@ -205,11 +175,6 @@ Dwa wierzchołki $u$ i $v$ należą do tego samego komponentu w $G_i$ wtedy i ty
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Przykład}
-\centerline{\Large Pokaż przykład operacji Insert na rysunku 1}
-\end{frame}
-
-
 \begin{frame}{Algorytm - procedury}
 \begin{center}
 \includegraphics[scale=0.4]{img/FindScc.png}
@@ -230,6 +195,12 @@ Dwa wierzchołki $u$ i $v$ należą do tego samego komponentu w $G_i$ wtedy i ty
 \begin{tw}
 Każda operacja \emp{Insert} wykonuje się w pesymistycznym czasie $O(m \alpha(m,n))$, a każda operacja \emp{Delete} w zamortyzowanym czasie $O(m \alpha(m,n))$. Złożoność pamięciowa to $O(m + n)$.
 \end{tw}
+\end{frame}
+
+\begin{frame}{Wypisanie rozkładu komponentów}
+
+
+
 \end{frame}
 
 \end{document}
