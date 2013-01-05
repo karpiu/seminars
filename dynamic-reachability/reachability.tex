@@ -199,8 +199,34 @@ Każda operacja \emp{Insert} wykonuje się w pesymistycznym czasie $O(m \alpha(m
 
 \begin{frame}{Wypisanie rozkładu komponentów}
 
-
+\begin{itemize}
+\item rozpatrujemy dwa kolejne lasy (przed i po Delete)
+\item dodajemy wskaźniki z każdego komponentu $v$ ze starego lasu do największysz komponentów w nowym lesie, które zawierają się w $v$
+\end{itemize}
 
 \end{frame}
+
+\begin{frame}{Procedury}
+
+\emp{Parts(v)} - zbiór największych komponentów nowego lasu, które zawierają się w $v$.
+
+\vspace{0.5cm}
+
+Innymi słowy: jeśli $v$ jest komponentem w starym lesie i $u \in Parts(v)$, to $u \subseteq v$. Dodatkowo jeśli istnieje komponent $u'$ nowego lasu taki, że $u \subseteq u'$, to $u' \not\subseteq v$.
+
+\end{frame}
+
+\begin{frame}{Procedury}
+\begin{center}
+\includegraphics[scale=0.4]{img/Parts.png}
+\end{center}
+\end{frame}
+
+\begin{frame}{Procedury}
+\begin{center}
+\includegraphics[scale=0.4]{img/Split.png}
+\end{center}
+\end{frame}
+
 
 \end{document}

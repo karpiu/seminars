@@ -117,10 +117,22 @@ Następnie przyjrzyjmy się operacji Insert.
 
 \noindent Z naszą strukturą możemy się jeszcze chwilę pobawić. Możemy np. wypisać na jakie komponenty rozłożył się stary komponent, po dokonaniu operacji Delete. Aby tego dokonać rozwarzmy dwa stany lasu komponentów, pierwszy - przed operacją Delete, drugi - zaraz po operacji Delete.
 
-\insertimg{ten na kartce kratkowanej}
-
 \section*{Slajd 17}
 
+\insertimg{ten na kartce kratkowanej}
 
+\readslide
+
+\section*{Slajd 18}
+
+\readslide
+
+\insertimg{wraz ze wskaźnikami}
+
+\section*{Slajd 19}
+
+\readslide
+
+Procedura jest raczej prosta. Zaczynając obliczać $Parts(v)$ zakładamy, że $Parts(v')$ zostało już wcześniej obliczone, dla każdego $v' \in children[v]$. $S$ jest zbiorem wynikowym. Od razu można stwierdzić, że wskaźniki dzieci komponentu $v$, są dobrymi kandydatami na bycie wskaźnikami komponentu $v$, wszak wszystkie kompononty z $S$ zawierają się w $v$. Ale oczywiście te komponenty nie muszą być maksymalne. Dlatego algorytm zachowuje zbiór $T$ zawierający wszystkich rodziców komponentów z $S$, które jeszcze nie zostały określone jako maksymalne.
 
 \end{document}
