@@ -1,0 +1,77 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage[utf8]{inputenc}
+\usepackage[polish]{babel}
+\usepackage{polski}
+\usepackage{verbatim}
+\usepackage{graphicx}
+
+\linespread{1.0}
+
+\newtheorem{defi}{Definicja}
+\newtheorem{theo}[defi]{Twierdzenie}
+\newtheorem{lemma}[defi]{Lemat}
+\newtheorem{obs}[defi]{Obserwacja}
+
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\RR}{\mathbb{R}^3}
+\newcommand{\RRR}{\mathbb{R}^{3 \times 3}}
+\newcommand{\RRRq}{\mathbb{R}^{4 \times 4}}
+\newcommand{\RRq}{\mathbb{R}^4}
+\newcommand{\vecs}[2]{\langle #1 , #2 \rangle}
+
+\newcommand{\vectt}[2]{\begin{bmatrix} #1 \\ #2 \end{bmatrix}}
+\newcommand{\vecttt}[3]{\begin{bmatrix} #1 \\ #2 \\ #3 \end{bmatrix}}
+\newcommand{\vectttt}[4]{\begin{bmatrix} #1 \\ #2 \\ #3 \\ #4 \end{bmatrix}}
+\newcommand{\Vectt}[4]{\begin{bmatrix} #1 & #2 \\ #3 & #4 \end{bmatrix}}
+
+\title{Rozpoznawanie obiektów poprzez badanie cieni}
+
+\author{M.~K.~Karpiński\\
+\\
+Uniwersytet Wrocławski\\
+Instytut Informatyki}
+
+\date{Wrocław, dnia \today\ r.}
+
+\begin{document}
+
+\maketitle
+
+\section{Streszczenie referatu}
+\indent \indent Gdy patrzymy na zdjęcia obiektów, które mają gładki cień, jesteśmy w stanie mniej-więcej przewidzieć jaki kształt ma dany obiekt badając jak zachowuje się jego cień. Pytanie: jak to jest możliwe? Odpowiedzią jest to, że gdy wektor normalny zmienia się wędrując po obiekcie, zmienia się też jasność. Można to wyrazić jako funkcję kąta między orientacją powierzchni lokalnej a światłem globalnym.
+
+Problem wydobycia kształtu powierzchni obiektu na tej podstawie nazywa się {\em shape from shading} i jest jednym z klasycznych problemów dziedziny {\em Computer vision}. Większość algorytmów rozwiązujących problem {\em shape from shading} zakłada, że rozpoznawany obiekt z obrazka na całej swojej powierzchni ma jednakową wartość odbicia oraz stosunek ilości promieniowania odbitego do padającego. Ponadto zakładamy, że współrzędne źródeł światła są znane lub wyliczalne w łatwy sposób.
+
+Jeśli założymy, że źródła światła oraz obserwator są odległe, to zróżnicowanie w intensywności (równanie natężenia promieniowania) jest wyłącznie funkcją lokalnej orientacji powierzchni:
+
+\begin{equation}
+I(x,y) = R(p(x,y),q(x,y))
+\end{equation}
+
+\noindent gdzie $(p,q)=(z_x,z_y)$ są pochodnymi mapy głębokości i $R(p,q)$ jest tzw. mapą odbicia. Np. mapą odbicia powierzchni lambertowskiej jest dot product między normalną powierzchni $\hat{n}=(p,q,1)/\sqrt{1 + p^2 + q^2}$ a kierunkiem źródła światła $v= (v_x,v_y,v_z)$,
+
+\begin{equation}
+R(p,q) = \max(0,\rho \frac{pv_x + qv_y + v_z}{\sqrt{1 + p^2 + q^2}})
+\end{equation}
+
+\noindent gdzie $\rho$ jest stosunkiem ilości promieniowania odbitego do padającego dla danej powierzchni.
+
+Zasadniczo, powyższe równania mogą być użyte do estymowania (p,q) przy użyciu nieliniowej metody najmniejszych kwadratów lub innych metod. Niestety, dopóki nie narzucimy dodatkowych ograniczeń, to mamy więcej niewiadomych na piksel (p,q) niż jest pomiarów (I). Jedym z częściej używanych ograniczeń jest tzw. ograniczenie gładkości:
+
+\begin{equation}
+\varepsilon_S = \int p^2_x + p^2_y + q^2_x + q^2_y dx dy = \int ||\nabla p||^2 + ||\nabla q||^2 dx dy 
+\end{equation}
+
+Ograniczenie gładkości odnosi się do założenia, że wartości pikseli zmieniają się powoli podczas poruszania się po powierzchni w dowolnym kierunku i z dużym prawdopodobieństwem będą podobne do swoich sąsiadów.
+
+Niestety, metoda {\em shape from shading} jest podatna na lokalne minima w przestrzeni poszukiwań i podobnie jak inne problemy, które wymagają jednoczesnej estymacji wielu zmiennych, cierpi z powodu powolnej konwergencji.
+
+W praktyce, ta technika musi być połączona z innymi metodami w celu uzyskania zadawalających rozwiązań.
+
+Jeden ze sposobów polepszenia metody {\em shape from shading} jest {\em photometric stereo}, który polega na użyciu kilku różnych źródeł światła i naprzemiennie je włączając/wyłączając.
+
+\end{document}
