@@ -182,52 +182,63 @@ Standaryzujemy wiek zgodnie z poniższą tabelą:
   \includegraphics[scale=0.3]{img/data_imagesc.jpg}  
 \end{center}
 
-
 \end{frame}
 
-%       1             psoriasis(łuszczyca)	     112
-%       2             seboreic dermatitis(łojotokowe zapalenie skóry)             61
-%       3             lichen planus(liszaj płaski)    72
-%       4             pityriasis rosea (łupież różowy Giberta)                49
-%       5             chronic dermatitis (atopowe zapalenie skóry)               52    
-%       6             pityriasis rubra pilaris (Rogowacenie przymieszkowe czerwone)       20
-%
-% Clinical Attributes: (take values 0, 1, 2, 3, unless otherwise indicated)
-%      1: erythema
-%      2: scaling
-%      3: definite borders
-%      4: itching
-%      5: koebner phenomenon
-%      6: polygonal papules
-%      7: follicular papules
-%      8: oral mucosal involvement
-%      9: knee and elbow involvement
-%     10: scalp involvement
-%     11: family history, (0 or 1)
-%     34: Age (linear)
-%
-% Histopathological Attributes: (take values 0, 1, 2, 3)
-%     12: melanin incontinence
-%     13: eosinophils in the infiltrate
-%     14: PNL infiltrate
-%     15: fibrosis of the papillary dermis
-%     16: exocytosis
-%     17: acanthosis
-%     18: hyperkeratosis
-%     19: parakeratosis
-%     20: clubbing of the rete ridges
-%     21: elongation of the rete ridges
-%     22: thinning of the suprapapillary epidermis
-%     23: spongiform pustule
-%     24: munro microabcess
-%     25: focal hypergranulosis
-%     26: disappearance of the granular layer
-%     27: vacuolisation and damage of basal layer
-%     28: spongiosis
-%     29: saw-tooth appearance of retes
-%     30: follicular horn plug
-%     31: perifollicular parakeratosis
-%     32: inflammatory monoluclear inflitrate
-%     33: band-like infiltrate
+\begin{frame}{Sieć neuronowa - MLP}
+\begin{itemize}
+\item pakiet netlab (mlptrain, mlpfwd)
+\item sieć dwuwarstwowa
+\item jedna warstwa ukryta z osmioma neuronami
+\item wejście długości 34
+\item wyjście długości 6
+\item liniowa funkcja aktywacji
+\item 100 iteracji 
+\end{itemize}
+\end{frame}
+
+\begin{frame}{5-fold cross-validation}
+ Średni błąd: 0.0223
+\vspace{0.5cm}
+
+\begin{center}
+{\LARGE 
+\begin{tabular}{ | c | c | c | c | c | c |}
+\hline
+   22.4  &       0  &       0  &       0 &        0  &       0 \\ \hline
+         0  & 10.4  &       0  &  1.8 &        0  &       0 \\ \hline
+         0  &       0  & 14.4  &       0 &        0  &       0 \\ \hline
+         0  &  0.8  &       0  &  9.0 &        0  &       0 \\ \hline
+         0  &       0  &       0  &       0 &  10.0  &       0 \\ \hline
+         0  &       0  &       0  &       0 &        0  &  4.0 \\ \hline
+\end{tabular}
+}
+\end{center}
+\end{frame}
+
+\begin{frame}{5-fold cross-validation}
+\begin{center}
+  \includegraphics[scale=0.35]{img/mp_mesh.jpg}  
+\end{center}
+\end{frame}
+
+\begin{frame}{5-fold cross-validation}
+ Średni błąd: 0.0733
+\vspace{0.5cm}
+
+\begin{center}
+{\LARGE 
+\begin{tabular}{ | c | c | c | c | c | c |}
+\hline
+   22.4  &       0  &       0  &       0  &       0  &       0 \\ \hline
+    0.2  & 11.0  &       0  &  0.4  &  0.6  &       0 \\ \hline
+         0  &       0  & 14.2  &       0  &  0.2  &       0 \\ \hline
+         0  &  1.0  &  0.2  &  8.6  &       0  &       0 \\ \hline
+         0  &       0  &       0  &       0  & 10.4  &       0 \\ \hline
+         0  &       0  &       0  &       0  &       0  &  4.0 \\ \hline
+\end{tabular}
+}
+\end{center}
+\end{frame}
+
 
 \end{document}
